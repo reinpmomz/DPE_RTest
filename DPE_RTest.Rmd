@@ -1,0 +1,148 @@
+---
+title: "DPE_RTest"
+output:
+  html_document: 
+    keep_md: yes
+  pdf_document: default
+  word_document: default
+---
+
+# R Programming: DPE R Test
+
+## loading Relevant packages and Data Set
+```{r}
+library(plyr)
+library(tidyverse)
+## tidyverse includes readr, ggplot2, dplyr, forcats, tibble, tidyr, purrr, stringr
+library(stats)
+library(psych)
+
+
+## Reading our dataset
+setwd('E:/Documents/Reinp/GitHub Respositories/DPE_RTest')
+
+R_test <- read_csv("R_test_dataset.csv")
+View(R_test)
+attach(R_test)
+
+```
+
+## Structure of the data
+```{r}
+
+head(R_test)
+
+tail(R_test)
+
+## How many variables and observations are there?
+ncol(R_test)
+
+nrow(R_test)
+
+##learn more about the dataset
+help(R_test)
+??R_test
+
+
+str(R_test)
+class(R_test)
+typeof(R_test) 
+length(R_test) #number of variables
+names(R_test) #display variable names
+
+#attributes(R_test) names(R_test), class(R_test), row.names(R_test)
+
+```
+
+
+## Missing data
+```{r}
+complete.cases(R_test) ##print logical vector indicating complete rows
+                       ##(i.e. rows without NA)
+
+which(!complete.cases(R_test)) #check for incomplete cases (rows with NA)
+
+#R_test[complete.cases(R_test), ] ## Keep only the complete rows
+
+#data_complete <- R_test[complete.cases(R_test), ] ## Store the complete cases subset in a new
+                                                   ##data frame
+
+which(is.na(R_test)) #check for missing values
+sum(is.na(R_test))
+
+```
+
+## Duplicated Cases
+```{r}
+duplicated(R_test$SbjNum)
+sum(duplicated(R_test$SbjNum))
+table(duplicated(R_test$SbjNum))
+
+mean(duplicated(R_test$SbjNum)) #proportion of repeat cases
+
+sum(duplicated(R_test$SbjNum))/nrow(R_test)
+```
+
+## unique cases
+```{r}
+
+#unique(R_test$SbjNum)
+#count(unique(R_test$SbjNum))
+#table(unique(R_test$SbjNum))
+
+## data with unique SbjNum
+
+R_testu <- R_test[!duplicated(R_test$SbjNum),]
+View(R_testu)
+attach(R_testu)
+
+nrow(R_testu)
+```
+
+## Assigning value labels to variables
+```{r}
+R_testu$Interviewer <- factor(R_testu$Interviewer,
+levels = c(1,2,3,4,5,6,7,8,9,10,11,12,13),
+labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", "Wabwire Thomas",
+           "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary", "Arinitwe Mackline", "Alum Maria",
+           "Kasule violet", "Aweko Monica", "Nabbumba Pennina"))
+
+R_testu$S2 <- factor(R_testu$S2,
+levels = c(1,2,3,4),
+labels = c("17 and below", "18-25", "25-30", "31 and above"))
+
+R_testu$Social_Class <- factor(R_testu$Social_Class,
+levels = c(1,2,3,4,5),
+labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", "Social Class A"))
+
+R_testu$B4 <- factor(R_testu$B4,
+levels = c(1,2),
+labels = c("Yes", "No"))
+
+R_testu$B17 <- factor(R_testu$B17,
+levels = c(1,2,3,4,5),
+labels = c("Extremely ready", "Somewhat ready", "Neutral", "Not ready", "Definitely not ready"))
+
+R_testu$C1 <- factor(R_testu$C1,
+levels = c(1,2,3,4,5),
+labels = c("I have been employed (for example in an office, restaurant,", 
+           "I am self-employed (for example, on my own farm or family's", 
+           "I have been employed as an unpaid intern", 
+           "I have been engaged in household activities including agricu", 
+           "I have not been employed"))
+
+```
+
+
+## Distribution of variables
+```{r}
+
+#DollarSign Syntax
+table(R_testu$Interviewer)
+
+which(is.na(R_testu$Ward)) #check for missing values in ward
+#table(R_testu$Ward)
+
+
+```
+

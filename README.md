@@ -127,7 +127,7 @@ a.	Interviewer
 b.	S2
 c.	Social_Class
 d.	B4
-e.	B7
+e.	B17
 f.	C1
 
 9.	Compute the number of interviews conducted by each interviewer (2mrks).
