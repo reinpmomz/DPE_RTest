@@ -1,5 +1,7 @@
 ---
 title: "DPE_RTest"
+author: "Reinp"
+date: "2020-05-05"
 output:
   html_document: 
     keep_md: yes
@@ -7,85 +9,34 @@ output:
   word_document: default
 ---
 
-# R Programming: DPE R Test
+# R Programming
+
+## Set Chunk requirements
+
+
+```r
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+#echo=FALSE indicates that the code will not be shown in the final document 
+#(though any results/output would still be displayed).
+#include=FALSE to have the chunk evaluated, but neither the code nor its output displayed
+# warning=FALSE and message=FALSE suppress any R warnings or messages from being included 
+#in the final document
+```
 
 ## loading Relevant packages and Data Set
 
 ```r
 library(plyr)
 library(tidyverse)
-```
-
-```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-```
-
-```
-## v ggplot2 3.2.1     v purrr   0.3.3
-## v tibble  2.1.3     v dplyr   0.8.3
-## v tidyr   1.0.0     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.4.0
-```
-
-```
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::arrange()   masks plyr::arrange()
-## x purrr::compact()   masks plyr::compact()
-## x dplyr::count()     masks plyr::count()
-## x dplyr::failwith()  masks plyr::failwith()
-## x dplyr::filter()    masks stats::filter()
-## x dplyr::id()        masks plyr::id()
-## x dplyr::lag()       masks stats::lag()
-## x dplyr::mutate()    masks plyr::mutate()
-## x dplyr::rename()    masks plyr::rename()
-## x dplyr::summarise() masks plyr::summarise()
-## x dplyr::summarize() masks plyr::summarize()
-```
-
-```r
 ## tidyverse includes readr, ggplot2, dplyr, forcats, tibble, tidyr, purrr, stringr
 library(stats)
 library(psych)
-```
 
-```
-## 
-## Attaching package: 'psych'
-```
 
-```
-## The following objects are masked from 'package:ggplot2':
-## 
-##     %+%, alpha
-```
-
-```r
 ## Reading our dataset
 setwd('E:/Documents/Reinp/GitHub Respositories/DPE_RTest')
 
 R_test <- read_csv("R_test_dataset.csv")
-```
-
-```
-## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   Start_Time = col_time(format = ""),
-##   Q_2 = col_character(),
-##   Ward = col_character(),
-##   A1_A = col_character(),
-##   A1_B = col_character(),
-##   Q_25_S = col_character(),
-##   Q_32_S = col_character(),
-##   B3 = col_character()
-## )
-```
-
-```
-## See spec(...) for full column specifications.
-```
-
-```r
 View(R_test)
 attach(R_test)
 ```
@@ -159,13 +110,8 @@ help(R_test)
 
 ```r
 ??R_test
-```
 
-```
-## starting httpd help server ... done
-```
 
-```r
 str(R_test)
 ```
 
@@ -310,7 +256,7 @@ complete.cases(R_test) ##print logical vector indicating complete rows
 ```r
                        ##(i.e. rows without NA)
 
-which(!complete.cases(R_test)) #check for incomplete cases (rows with NA)
+which(!complete.cases(R_test)) #print incomplete cases (rows with NA)
 ```
 
 ```
@@ -480,17 +426,7 @@ sum(duplicated(R_test$SbjNum))/nrow(R_test)
 R_testu <- R_test[!duplicated(R_test$SbjNum),]
 View(R_testu)
 attach(R_testu)
-```
 
-```
-## The following objects are masked from R_test:
-## 
-##     A1_A, A1_B, A10, A12, A2, A5, A8, A9, B16, B17, B3, B4, B8, C1,
-##     Interviewer, Q_2, Q_25_S, Q_32_S, S2, S3, S4, S5_a, SbjNum,
-##     Social_Class, Start_Time, Ward
-```
-
-```r
 nrow(R_testu)
 ```
 
@@ -503,9 +439,10 @@ nrow(R_testu)
 ```r
 R_testu$Interviewer <- factor(R_testu$Interviewer,
 levels = c(1,2,3,4,5,6,7,8,9,10,11,12,13),
-labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", "Wabwire Thomas",
-           "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary", "Arinitwe Mackline", "Alum Maria",
-           "Kasule violet", "Aweko Monica", "Nabbumba Pennina"))
+labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", 
+           "Wabwire Thomas", "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary",
+           "Arinitwe Mackline", "Alum Maria", "Kasule violet", "Aweko Monica", 
+           "Nabbumba Pennina"))
 
 R_testu$S2 <- factor(R_testu$S2,
 levels = c(1,2,3,4),
@@ -513,7 +450,8 @@ labels = c("17 and below", "18-25", "25-30", "31 and above"))
 
 R_testu$Social_Class <- factor(R_testu$Social_Class,
 levels = c(1,2,3,4,5),
-labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", "Social Class A"))
+labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", 
+           "Social Class A"))
 
 R_testu$B4 <- factor(R_testu$B4,
 levels = c(1,2),
@@ -563,6 +501,158 @@ which(is.na(R_testu$Ward)) #check for missing values in ward
 ```
 
 ```r
-#table(R_testu$Ward)
+R_testu$Ward <- gsub("Bukoto Nsimbi ziwome", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("Bukoto church", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("KABOWA", "Kabowa", R_testu$Ward)
+R_testu$Ward <- gsub("kabowa", "Kabowa", R_testu$Ward)
+R_testu$Ward <- gsub("Kafumbe mukasa", "Kafumbe Mukasa", R_testu$Ward)
+R_testu$Ward <- gsub("kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("kamokya", "Kamwokya", R_testu$Ward)
+R_testu$Ward <- gsub("KAMWOKYA", "Kamwokya", R_testu$Ward)
+R_testu$Ward <- gsub("kansanga", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("kasanga", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("Kansanga kiwafu Estates", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("kanyanya - komamboga zone A", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("kanyanya central zone 1", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("Kanyanya central zone B", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("kasubi", "Kasubi", R_testu$Ward)
+R_testu$Ward <- gsub("KASUBI", "Kasubi", R_testu$Ward)
+R_testu$Ward <- gsub("kawaala", "Kawaala", R_testu$Ward)
+R_testu$Ward <- gsub("Kinawataka", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("Kinawataka zone 1", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("KISASI DUNGU ZONE", "Dungu Zone", R_testu$Ward)
+R_testu$Ward <- gsub("kisenyi", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("KISENYI", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("Kisenyi zone 3", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("kisira zone", "Kisira zone", R_testu$Ward)
+R_testu$Ward <- gsub("kisugu", "Kisugu", R_testu$Ward)
+R_testu$Ward <- gsub("Kisugu Upper Zone", "Kisugu", R_testu$Ward)
+
+R_testu$Ward <- gsub("NAKULABYE", "Nakulabye", R_testu$Ward)
+R_testu$Ward <- gsub("NALUKABYE", "Nakulabye", R_testu$Ward)
+R_testu$Ward <- gsub("NANKULABYE", "Nakulabye", R_testu$Ward)
+
+R_testu$Ward <- gsub("nsambya", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya  Barracks.", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya barracks", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya Barracks", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya kevina", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya Kevina", "Nsambya", R_testu$Ward)
+
+R_testu$Ward <- gsub("wankulukuku", "Wankulukuku", R_testu$Ward)
+R_testu$Ward <- gsub("WANKULUKUKU", "Wankulukuku", R_testu$Ward)
+R_testu$Ward <- gsub("WUNKULUKUKU", "Wankulukuku", R_testu$Ward)
+
+table(R_testu$Ward)
+```
+
+```
+## 
+##                   Boma zone          Buganda road flats 
+##                           1                           2 
+##                    BUGOLOBI                      Bukoto 
+##                           1                           2 
+##        Bukoto Nsimbi Ziwome                      BUSEGA 
+##                           1                          11 
+##                      BWAISE                  Dungu Zone 
+##                           2                           7 
+##                  Kabalagala                      Kabowa 
+##                           1                          10 
+##              Kafumbe Mukasa                    Kagugube 
+##                           2                           6 
+##                       Kagwo                KAMPALA ROAD 
+##                           1                           1 
+##                    Kamwokya                    Kansanga 
+##                          11                          12 
+##               Kanyanya zone       Kasirye zone/mpererwe 
+##                           3                           1 
+##                      Kasubi                 kasule zone 
+##                          10                           1 
+##                      KATAZA                     Kawaala 
+##                           1                           6 
+##                        kazo                Kiganda zone 
+##                           2                           5 
+##                  Kinawataka            Kinyarwanda zone 
+##                           3                           1 
+##         KIREKA MIWANDA ZONE                     kiruddu 
+##                           1                           1 
+##                     Kisenyi                 Kisira zone 
+##                           9                           2 
+##                      Kisugu                      KITEBI 
+##                          18                           1 
+##                      Kivulu                    kiwatule 
+##                           1                           3 
+##                    Kiwatule       kiwatule  kinyarwanda 
+##                           4                           1 
+##        kiwatule kinyarwanda                  Kizza zone 
+##                           3                           1 
+##                    KYEBANDO                Liganda Zone 
+##                           9                           1 
+##                      lugala                      Lugala 
+##                           2                           1 
+##               Lukalubo zone                      LUSAZE 
+##                           1                           3 
+##                      Luwafu         Luwafu kirundu zone 
+##                           6                           1 
+##                    MAKERERE        Makerere  University 
+##                           7                           1 
+##           Makerere Kagugube           Makerere Kakugube 
+##                           1                           1 
+##      makerere kakugube zone             Makerere kavule 
+##                           1                           2 
+##             MAKERERE KAVULE             Makerere kivulu 
+##                           1                           1 
+##             Makerere Kivulu             Makindyd Luwafu 
+##                           3                           1 
+##                    Makindye             makindye luwafu 
+##                           1                           1 
+##             Makindye luwafu             Makindye Luwafu 
+##                           1                           1 
+##     Makindye luwafu kirundu           Mamerere Kagugube 
+##                           1                           1 
+##                    masanafu                    Masanafu 
+##                           4                           2 
+##                    MASANAFU                       Mbuya 
+##                          10                           3 
+##                       MBUYA                     Mbuya 1 
+##                           1                           2 
+##                 Mbuya kaggo                 Mbuya Kaggo 
+##                           1                           1 
+##            Mbuya kinawataka                Mbuya zone 1 
+##                           2                           1 
+##                      Mulago               Mulago ward C 
+##                           1                           1 
+##                     Mutungo       Mutungo  Kampala road 
+##                           6                           1 
+##             Mutungo  Some 4               Mutungo Biina 
+##                           1                           3 
+##              Mutungo zone 4              Mutungo Zone 4 
+##                           3                           2 
+## Mutungo Zone 4 Kampala road                     Mutungu 
+##                           1                           1 
+##                  NABULAGALA              NABWERU ZONE 1 
+##                           3                           1 
+##               nabweru zone1                      NAGURU 
+##                           1                           4 
+##             NAGURU BARRACKS                    Nakasero 
+##                           1                           1 
+##                      Nakawa                   Nakulabye 
+##                           4                           9 
+##                   NAMUNGONA            Namungona Kisugu 
+##                           5                           1 
+##                  Namungoona                     NATEETE 
+##                           2                           4 
+##                      NDEEBA                     Nsambya 
+##                           4                          12 
+##                      Ntinda               Sebagala Zone 
+##                           1                           1 
+##              Sebaggala zone                   Tula zone 
+##                           2                           1 
+##                   Wandegeya                   WANDEGEYA 
+##                           3                           3 
+##        wandegeya.junju road                 Wankulukuku 
+##                           1                           6 
+##               Wheeling Zone 
+##                           2
 ```
 

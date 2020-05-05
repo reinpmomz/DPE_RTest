@@ -1,5 +1,7 @@
 ---
 title: "DPE_RTest"
+author: "Reinp"
+date: "`r Sys.Date()`"
 output:
   html_document: 
     keep_md: yes
@@ -7,7 +9,18 @@ output:
   word_document: default
 ---
 
-# R Programming: DPE R Test
+# R Programming
+
+## Set Chunk requirements
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+#echo=FALSE indicates that the code will not be shown in the final document 
+#(though any results/output would still be displayed).
+#include=FALSE to have the chunk evaluated, but neither the code nor its output displayed
+# warning=FALSE and message=FALSE suppress any R warnings or messages from being included 
+#in the final document
+```
 
 ## loading Relevant packages and Data Set
 ```{r}
@@ -60,7 +73,7 @@ names(R_test) #display variable names
 complete.cases(R_test) ##print logical vector indicating complete rows
                        ##(i.e. rows without NA)
 
-which(!complete.cases(R_test)) #check for incomplete cases (rows with NA)
+which(!complete.cases(R_test)) #print incomplete cases (rows with NA)
 
 #R_test[complete.cases(R_test), ] ## Keep only the complete rows
 
@@ -103,9 +116,10 @@ nrow(R_testu)
 ```{r}
 R_testu$Interviewer <- factor(R_testu$Interviewer,
 levels = c(1,2,3,4,5,6,7,8,9,10,11,12,13),
-labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", "Wabwire Thomas",
-           "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary", "Arinitwe Mackline", "Alum Maria",
-           "Kasule violet", "Aweko Monica", "Nabbumba Pennina"))
+labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", 
+           "Wabwire Thomas", "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary",
+           "Arinitwe Mackline", "Alum Maria", "Kasule violet", "Aweko Monica", 
+           "Nabbumba Pennina"))
 
 R_testu$S2 <- factor(R_testu$S2,
 levels = c(1,2,3,4),
@@ -113,7 +127,8 @@ labels = c("17 and below", "18-25", "25-30", "31 and above"))
 
 R_testu$Social_Class <- factor(R_testu$Social_Class,
 levels = c(1,2,3,4,5),
-labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", "Social Class A"))
+labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", 
+           "Social Class A"))
 
 R_testu$B4 <- factor(R_testu$B4,
 levels = c(1,2),
@@ -141,7 +156,50 @@ labels = c("I have been employed (for example in an office, restaurant,",
 table(R_testu$Interviewer)
 
 which(is.na(R_testu$Ward)) #check for missing values in ward
-#table(R_testu$Ward)
+
+R_testu$Ward <- gsub("Bukoto Nsimbi ziwome", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("Bukoto church", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("KABOWA", "Kabowa", R_testu$Ward)
+R_testu$Ward <- gsub("kabowa", "Kabowa", R_testu$Ward)
+R_testu$Ward <- gsub("Kafumbe mukasa", "Kafumbe Mukasa", R_testu$Ward)
+R_testu$Ward <- gsub("kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("kamokya", "Kamwokya", R_testu$Ward)
+R_testu$Ward <- gsub("KAMWOKYA", "Kamwokya", R_testu$Ward)
+R_testu$Ward <- gsub("kansanga", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("kasanga", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("Kansanga kiwafu Estates", "Kansanga", R_testu$Ward)
+R_testu$Ward <- gsub("kanyanya - komamboga zone A", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("kanyanya central zone 1", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("Kanyanya central zone B", "Kanyanya zone", R_testu$Ward)
+R_testu$Ward <- gsub("kasubi", "Kasubi", R_testu$Ward)
+R_testu$Ward <- gsub("KASUBI", "Kasubi", R_testu$Ward)
+R_testu$Ward <- gsub("kawaala", "Kawaala", R_testu$Ward)
+R_testu$Ward <- gsub("Kinawataka", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("Kinawataka zone 1", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("KISASI DUNGU ZONE", "Dungu Zone", R_testu$Ward)
+R_testu$Ward <- gsub("kisenyi", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("KISENYI", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("Kisenyi zone 3", "Kisenyi", R_testu$Ward)
+R_testu$Ward <- gsub("kisira zone", "Kisira zone", R_testu$Ward)
+R_testu$Ward <- gsub("kisugu", "Kisugu", R_testu$Ward)
+R_testu$Ward <- gsub("Kisugu Upper Zone", "Kisugu", R_testu$Ward)
+
+R_testu$Ward <- gsub("NAKULABYE", "Nakulabye", R_testu$Ward)
+R_testu$Ward <- gsub("NALUKABYE", "Nakulabye", R_testu$Ward)
+R_testu$Ward <- gsub("NANKULABYE", "Nakulabye", R_testu$Ward)
+
+R_testu$Ward <- gsub("nsambya", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya  Barracks.", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya barracks", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya Barracks", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya kevina", "Nsambya", R_testu$Ward)
+R_testu$Ward <- gsub("Nsambya Kevina", "Nsambya", R_testu$Ward)
+
+R_testu$Ward <- gsub("wankulukuku", "Wankulukuku", R_testu$Ward)
+R_testu$Ward <- gsub("WANKULUKUKU", "Wankulukuku", R_testu$Ward)
+R_testu$Ward <- gsub("WUNKULUKUKU", "Wankulukuku", R_testu$Ward)
+
+table(R_testu$Ward)
 
 
 ```
