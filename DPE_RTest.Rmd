@@ -3,9 +3,9 @@ title: "DPE_RTest"
 author: "Reinp"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document: 
     keep_md: yes
-  pdf_document: default
   word_document: default
 ---
 
@@ -158,7 +158,9 @@ table(R_testu$Interviewer)
 which(is.na(R_testu$Ward)) #check for missing values in ward
 
 R_testu$Ward <- gsub("Bukoto Nsimbi ziwome", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("Bukoto Nsimbi Ziwome", "Bukoto", R_testu$Ward)
 R_testu$Ward <- gsub("Bukoto church", "Bukoto", R_testu$Ward)
+
 R_testu$Ward <- gsub("KABOWA", "Kabowa", R_testu$Ward)
 R_testu$Ward <- gsub("kabowa", "Kabowa", R_testu$Ward)
 R_testu$Ward <- gsub("Kafumbe mukasa", "Kafumbe Mukasa", R_testu$Ward)
@@ -174,7 +176,6 @@ R_testu$Ward <- gsub("Kanyanya central zone B", "Kanyanya zone", R_testu$Ward)
 R_testu$Ward <- gsub("kasubi", "Kasubi", R_testu$Ward)
 R_testu$Ward <- gsub("KASUBI", "Kasubi", R_testu$Ward)
 R_testu$Ward <- gsub("kawaala", "Kawaala", R_testu$Ward)
-R_testu$Ward <- gsub("Kinawataka", "Kinawataka", R_testu$Ward)
 R_testu$Ward <- gsub("Kinawataka zone 1", "Kinawataka", R_testu$Ward)
 R_testu$Ward <- gsub("KISASI DUNGU ZONE", "Dungu Zone", R_testu$Ward)
 R_testu$Ward <- gsub("kisenyi", "Kisenyi", R_testu$Ward)
@@ -183,11 +184,53 @@ R_testu$Ward <- gsub("Kisenyi zone 3", "Kisenyi", R_testu$Ward)
 R_testu$Ward <- gsub("kisira zone", "Kisira zone", R_testu$Ward)
 R_testu$Ward <- gsub("kisugu", "Kisugu", R_testu$Ward)
 R_testu$Ward <- gsub("Kisugu Upper Zone", "Kisugu", R_testu$Ward)
+R_testu$Ward <- gsub("kiwatule", "Kiwatule", R_testu$Ward)
+R_testu$Ward <- gsub("Kiwatule  kinyarwanda", "Kinyarwanda zone", R_testu$Ward)
+R_testu$Ward <- gsub("Kiwatule kinyarwanda", "Kinyarwanda zone", R_testu$Ward)
 
+R_testu$Ward <- gsub("lugala", "Lugala", R_testu$Ward)
+R_testu$Ward <- gsub("Luwafu kirundu zone", "kiruddu", R_testu$Ward)
+
+R_testu$Ward <- gsub("Makerere  University", "MAKERERE", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kakugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("makerere kakugube zone", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("MAKERERE KAVULE", "Makerere kavule", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere kivulu", "Kivulu", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kivulu", "Kivulu", R_testu$Ward)
+R_testu$Ward <- gsub("Mamerere Kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("Makindyd Luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("makindye luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye Luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye luwafu kirundu", "kiruddu", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye kirundu", "kiruddu", R_testu$Ward)
+R_testu$Ward <- gsub("masanafu", "Masanafu", R_testu$Ward)
+R_testu$Ward <- gsub("MASANAFU", "Masanafu", R_testu$Ward)
+R_testu$Ward <- gsub("MBUYA", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya 1", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya kaggo", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya Kaggo", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya zone 1", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya kinawataka", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("Mulago ward C", "Mulago", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo  Some 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Biina", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo zone 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Zone 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungu", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo  Kampala road", "KAMPALA ROAD", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Kampala road", "KAMPALA ROAD", R_testu$Ward)
+
+R_testu$Ward <- gsub("NABWERU ZONE 1", "Nabweru", R_testu$Ward)
+R_testu$Ward <- gsub("nabweru zone1", "Nabweru", R_testu$Ward)
+R_testu$Ward <- gsub("NAGURU BARRACKS", "NAGURU", R_testu$Ward)
 R_testu$Ward <- gsub("NAKULABYE", "Nakulabye", R_testu$Ward)
 R_testu$Ward <- gsub("NALUKABYE", "Nakulabye", R_testu$Ward)
 R_testu$Ward <- gsub("NANKULABYE", "Nakulabye", R_testu$Ward)
 
+R_testu$Ward <- gsub("NAMUNGONA", "Namungoona", R_testu$Ward)
+R_testu$Ward <- gsub("Namungona Kisugu", "Namungoona", R_testu$Ward)
 R_testu$Ward <- gsub("nsambya", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya  Barracks.", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya barracks", "Nsambya", R_testu$Ward)
@@ -195,12 +238,175 @@ R_testu$Ward <- gsub("Nsambya Barracks", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya kevina", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya Kevina", "Nsambya", R_testu$Ward)
 
+R_testu$Ward <- gsub("Sebagala Zone", "Sebaggala zone", R_testu$Ward)
+R_testu$Ward <- gsub("wandegeya.junju road", "Wandegeya", R_testu$Ward)
+R_testu$Ward <- gsub("WANDEGEYA", "Wandegeya", R_testu$Ward)
 R_testu$Ward <- gsub("wankulukuku", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WANKULUKUKU", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WUNKULUKUKU", "Wankulukuku", R_testu$Ward)
 
 table(R_testu$Ward)
 
+table(R_testu$Ward, R_testu$Interviewer)
+
+table(R_testu$Interviewer, R_testu$Ward)
+
+table(R_testu$Social_Class, R_testu$A2)
+
+table(R_testu$A2, R_testu$Social_Class)
+```
+
+
+## Descriptive Statistics
+
+```{r}
+library(mosaic)
+#favstats(~A2, data=R_testu)
+favstats(~A2, data=R_testu)[c("min", "max", "mean","median")]
+
+#favstats(~B16, data=R_testu)
+favstats(~B16, data=R_testu)[c("min", "max", "mean","median")]
 
 ```
+
+## ggplot- lineplot
+
+```{r}
+
+R_testuplot <- R_testu%>%
+group_by(A2) %>%
+summarise(B16 = mean(B16))
+
+
+ggplot(R_testuplot, aes(A2, B16))+
+  labs(title="Avearage amount willing to be paid for next degree/diploma", 
+       x="Age of Respondents", y="Amount per Semester") +
+  theme(axis.title=element_text(face="bold.italic", size="12", color="brown"), 
+        axis.text = element_text(size = 8, face="bold"), 
+        plot.title=element_text(size=12, face="bold", color="red", hjust = 0.5))+
+  geom_point(size=2)+
+  geom_line(colour="blue", size=1)+
+  geom_text(aes(label=R_testuplot$A2), nudge_x = 0.2, size=3)+
+  scale_x_continuous(breaks = c(16, 18, 20, 22, 24, 26, 28, 30, 32), limits=c(17,31))+
+  scale_y_continuous(breaks = c(0, 200000, 400000, 600000, 800000, 1000000, 1200000), 
+                     limits=c(0,1200000))
+  
+#If the plot is on the screen ggsave(“path/filename.png”)
+
+#If you have a plot object ggsave(myplot, file=“path/filename.png”)
+
+#Specify size ggsave(myplot, “path/filename.png”, width=6, height=4)
+
+# any plot format (pdf, png, eps, svg, jpg)
+
+
+```
+
+## ggplot Scatterplot
+```{r}
+
+ggplot(R_testu, aes(A2, B16))+
+  labs(title="Amount willing to be paid for next degree/diploma", 
+       x="Age of Respondents", y="Amount per Semester") +
+  theme(axis.title=element_text(face="bold.italic", size="12", color="brown"), 
+        axis.text = element_text(size = 8, face="bold"), 
+        plot.title=element_text(size=12, face="bold", color="red", hjust = 0.5))+
+  geom_point(size=2)+
+  scale_x_continuous(breaks = c(16, 18, 20, 22, 24, 26, 28, 30, 32), limits=c(17,31))+
+  scale_y_continuous(breaks = c(0, 250000, 500000, 750000, 1000000, 1250000, 1500000, 
+                  1750000, 2000000, 2250000, 2500000, 2750000, 3000000, 3250000),
+                  limits=c(0,3250000))
+
+```
+
+## Proportion
+```{r}
+#Your school an all secondary girls school?
+table(R_testu$B4)
+
+prop.table(table(R_testu$B4))
+
+```
+
+## Filter data
+```{r}
+
+
+
+```
+
+
+## Additional Analysis
+```{r}
+
+nrow(R_test)
+nrow(R_testu)
+
+R_testu1 = subset(R_testu, select = -c(Q_25_S,Q_32_S) ) #Delete column by name
+
+R_testu1 <- na.omit(R_testu1) # Getting rid of missing data
+View(R_testu1)
+attach(R_testu1)
+nrow(R_testu1)
+
+which(is.na(R_testu1)) #check for missing values
+sum(is.na(R_testu1))
+
+library(car)
+library(MASS) #So that distributions that must be non-zero can make sense of my data
+
+
+qqp(R_testu1$B16+1, "norm", main="Q-Q Plot ~ Normal model")
+
+qqp(R_testu1$B16+1, "lnorm", main="Q-Q Plot ~ LogNormal model") #lnorm is lognormal
+
+qqp(R_testu1$B16+1, "exp", main="Q-Q Plot ~ Exponential model")
+
+#qqp requires estimates of the parameters of the negative binomial, Poisson
+# and gamma distributions. You can generate estimates using the fitdistr function.
+#negative binomial and gamma distributions can only handle positive numbers.
+#Poisson distribution can only handle positive whole numbers.
+#Binomial and Poisson distributions are different from the others because they are
+#discrete rather than continuous, which means they quantify distinct,
+#countable events or the probability of these events
+
+nbinom <- fitdistr(R_testu$B16+1, "Negative Binomial")
+qqp(R_testu$B16+1, "nbinom", size = nbinom$estimate[[1]], mu =
+nbinom$estimate[[2]], main="Q-Q Plot ~ Negative Binomial model")
+
+pois <- fitdistr(R_testu1$B16+1, "Poisson")
+qqp(R_testu1$B16+1, "pois", lambda=pois$estimate, main="Q-Q Plot ~ Poisson model")
+
+gamma <- fitdistr(R_testu1$B16+1, "gamma",
+list(shape = 1, rate = 0.1), lower = 0.4)
+qqp(R_testu1$B16+1, "gamma", shape = gamma$estimate[[1]], rate =
+gamma$estimate[[2]], main="Q-Q Plot ~ Gamma model")
+
+weibull <- fitdistr(R_testu1$B16+1, "weibull")
+qqp(R_testu1$B16+1, "weibull", shape = weibull$estimate[[1]],
+scale=weibull$estimate[[2]], main="Q-Q Plot ~ Weibull model")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

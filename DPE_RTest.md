@@ -1,7 +1,7 @@
 ---
 title: "DPE_RTest"
 author: "Reinp"
-date: "2020-05-05"
+date: "2020-05-07"
 output:
   html_document: 
     keep_md: yes
@@ -502,7 +502,9 @@ which(is.na(R_testu$Ward)) #check for missing values in ward
 
 ```r
 R_testu$Ward <- gsub("Bukoto Nsimbi ziwome", "Bukoto", R_testu$Ward)
+R_testu$Ward <- gsub("Bukoto Nsimbi Ziwome", "Bukoto", R_testu$Ward)
 R_testu$Ward <- gsub("Bukoto church", "Bukoto", R_testu$Ward)
+
 R_testu$Ward <- gsub("KABOWA", "Kabowa", R_testu$Ward)
 R_testu$Ward <- gsub("kabowa", "Kabowa", R_testu$Ward)
 R_testu$Ward <- gsub("Kafumbe mukasa", "Kafumbe Mukasa", R_testu$Ward)
@@ -518,7 +520,6 @@ R_testu$Ward <- gsub("Kanyanya central zone B", "Kanyanya zone", R_testu$Ward)
 R_testu$Ward <- gsub("kasubi", "Kasubi", R_testu$Ward)
 R_testu$Ward <- gsub("KASUBI", "Kasubi", R_testu$Ward)
 R_testu$Ward <- gsub("kawaala", "Kawaala", R_testu$Ward)
-R_testu$Ward <- gsub("Kinawataka", "Kinawataka", R_testu$Ward)
 R_testu$Ward <- gsub("Kinawataka zone 1", "Kinawataka", R_testu$Ward)
 R_testu$Ward <- gsub("KISASI DUNGU ZONE", "Dungu Zone", R_testu$Ward)
 R_testu$Ward <- gsub("kisenyi", "Kisenyi", R_testu$Ward)
@@ -527,11 +528,53 @@ R_testu$Ward <- gsub("Kisenyi zone 3", "Kisenyi", R_testu$Ward)
 R_testu$Ward <- gsub("kisira zone", "Kisira zone", R_testu$Ward)
 R_testu$Ward <- gsub("kisugu", "Kisugu", R_testu$Ward)
 R_testu$Ward <- gsub("Kisugu Upper Zone", "Kisugu", R_testu$Ward)
+R_testu$Ward <- gsub("kiwatule", "Kiwatule", R_testu$Ward)
+R_testu$Ward <- gsub("Kiwatule  kinyarwanda", "Kinyarwanda zone", R_testu$Ward)
+R_testu$Ward <- gsub("Kiwatule kinyarwanda", "Kinyarwanda zone", R_testu$Ward)
 
+R_testu$Ward <- gsub("lugala", "Lugala", R_testu$Ward)
+R_testu$Ward <- gsub("Luwafu kirundu zone", "kiruddu", R_testu$Ward)
+
+R_testu$Ward <- gsub("Makerere  University", "MAKERERE", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kakugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("makerere kakugube zone", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("MAKERERE KAVULE", "Makerere kavule", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere kivulu", "Kivulu", R_testu$Ward)
+R_testu$Ward <- gsub("Makerere Kivulu", "Kivulu", R_testu$Ward)
+R_testu$Ward <- gsub("Mamerere Kagugube", "Kagugube", R_testu$Ward)
+R_testu$Ward <- gsub("Makindyd Luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("makindye luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye Luwafu", "Makindye", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye luwafu kirundu", "kiruddu", R_testu$Ward)
+R_testu$Ward <- gsub("Makindye kirundu", "kiruddu", R_testu$Ward)
+R_testu$Ward <- gsub("masanafu", "Masanafu", R_testu$Ward)
+R_testu$Ward <- gsub("MASANAFU", "Masanafu", R_testu$Ward)
+R_testu$Ward <- gsub("MBUYA", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya 1", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya kaggo", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya Kaggo", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya zone 1", "Mbuya", R_testu$Ward)
+R_testu$Ward <- gsub("Mbuya kinawataka", "Kinawataka", R_testu$Ward)
+R_testu$Ward <- gsub("Mulago ward C", "Mulago", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo  Some 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Biina", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo zone 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Zone 4", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungu", "Mutungo", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo  Kampala road", "KAMPALA ROAD", R_testu$Ward)
+R_testu$Ward <- gsub("Mutungo Kampala road", "KAMPALA ROAD", R_testu$Ward)
+
+R_testu$Ward <- gsub("NABWERU ZONE 1", "Nabweru", R_testu$Ward)
+R_testu$Ward <- gsub("nabweru zone1", "Nabweru", R_testu$Ward)
+R_testu$Ward <- gsub("NAGURU BARRACKS", "NAGURU", R_testu$Ward)
 R_testu$Ward <- gsub("NAKULABYE", "Nakulabye", R_testu$Ward)
 R_testu$Ward <- gsub("NALUKABYE", "Nakulabye", R_testu$Ward)
 R_testu$Ward <- gsub("NANKULABYE", "Nakulabye", R_testu$Ward)
 
+R_testu$Ward <- gsub("NAMUNGONA", "Namungoona", R_testu$Ward)
+R_testu$Ward <- gsub("Namungona Kisugu", "Namungoona", R_testu$Ward)
 R_testu$Ward <- gsub("nsambya", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya  Barracks.", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya barracks", "Nsambya", R_testu$Ward)
@@ -539,6 +582,9 @@ R_testu$Ward <- gsub("Nsambya Barracks", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya kevina", "Nsambya", R_testu$Ward)
 R_testu$Ward <- gsub("Nsambya Kevina", "Nsambya", R_testu$Ward)
 
+R_testu$Ward <- gsub("Sebagala Zone", "Sebaggala zone", R_testu$Ward)
+R_testu$Ward <- gsub("wandegeya.junju road", "Wandegeya", R_testu$Ward)
+R_testu$Ward <- gsub("WANDEGEYA", "Wandegeya", R_testu$Ward)
 R_testu$Ward <- gsub("wankulukuku", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WANKULUKUKU", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WUNKULUKUKU", "Wankulukuku", R_testu$Ward)
@@ -548,111 +594,615 @@ table(R_testu$Ward)
 
 ```
 ## 
-##                   Boma zone          Buganda road flats 
-##                           1                           2 
-##                    BUGOLOBI                      Bukoto 
-##                           1                           2 
-##        Bukoto Nsimbi Ziwome                      BUSEGA 
-##                           1                          11 
-##                      BWAISE                  Dungu Zone 
-##                           2                           7 
-##                  Kabalagala                      Kabowa 
-##                           1                          10 
-##              Kafumbe Mukasa                    Kagugube 
-##                           2                           6 
-##                       Kagwo                KAMPALA ROAD 
-##                           1                           1 
-##                    Kamwokya                    Kansanga 
-##                          11                          12 
-##               Kanyanya zone       Kasirye zone/mpererwe 
-##                           3                           1 
-##                      Kasubi                 kasule zone 
-##                          10                           1 
-##                      KATAZA                     Kawaala 
-##                           1                           6 
-##                        kazo                Kiganda zone 
-##                           2                           5 
-##                  Kinawataka            Kinyarwanda zone 
-##                           3                           1 
-##         KIREKA MIWANDA ZONE                     kiruddu 
-##                           1                           1 
-##                     Kisenyi                 Kisira zone 
-##                           9                           2 
-##                      Kisugu                      KITEBI 
-##                          18                           1 
-##                      Kivulu                    kiwatule 
-##                           1                           3 
-##                    Kiwatule       kiwatule  kinyarwanda 
-##                           4                           1 
-##        kiwatule kinyarwanda                  Kizza zone 
-##                           3                           1 
-##                    KYEBANDO                Liganda Zone 
-##                           9                           1 
-##                      lugala                      Lugala 
-##                           2                           1 
-##               Lukalubo zone                      LUSAZE 
-##                           1                           3 
-##                      Luwafu         Luwafu kirundu zone 
-##                           6                           1 
-##                    MAKERERE        Makerere  University 
-##                           7                           1 
-##           Makerere Kagugube           Makerere Kakugube 
-##                           1                           1 
-##      makerere kakugube zone             Makerere kavule 
-##                           1                           2 
-##             MAKERERE KAVULE             Makerere kivulu 
-##                           1                           1 
-##             Makerere Kivulu             Makindyd Luwafu 
-##                           3                           1 
-##                    Makindye             makindye luwafu 
-##                           1                           1 
-##             Makindye luwafu             Makindye Luwafu 
-##                           1                           1 
-##     Makindye luwafu kirundu           Mamerere Kagugube 
-##                           1                           1 
-##                    masanafu                    Masanafu 
-##                           4                           2 
-##                    MASANAFU                       Mbuya 
-##                          10                           3 
-##                       MBUYA                     Mbuya 1 
-##                           1                           2 
-##                 Mbuya kaggo                 Mbuya Kaggo 
-##                           1                           1 
-##            Mbuya kinawataka                Mbuya zone 1 
-##                           2                           1 
-##                      Mulago               Mulago ward C 
-##                           1                           1 
-##                     Mutungo       Mutungo  Kampala road 
-##                           6                           1 
-##             Mutungo  Some 4               Mutungo Biina 
-##                           1                           3 
-##              Mutungo zone 4              Mutungo Zone 4 
-##                           3                           2 
-## Mutungo Zone 4 Kampala road                     Mutungu 
-##                           1                           1 
-##                  NABULAGALA              NABWERU ZONE 1 
-##                           3                           1 
-##               nabweru zone1                      NAGURU 
-##                           1                           4 
-##             NAGURU BARRACKS                    Nakasero 
-##                           1                           1 
-##                      Nakawa                   Nakulabye 
-##                           4                           9 
-##                   NAMUNGONA            Namungona Kisugu 
-##                           5                           1 
-##                  Namungoona                     NATEETE 
-##                           2                           4 
-##                      NDEEBA                     Nsambya 
-##                           4                          12 
-##                      Ntinda               Sebagala Zone 
-##                           1                           1 
-##              Sebaggala zone                   Tula zone 
-##                           2                           1 
-##                   Wandegeya                   WANDEGEYA 
-##                           3                           3 
-##        wandegeya.junju road                 Wankulukuku 
-##                           1                           6 
-##               Wheeling Zone 
-##                           2
+##             Boma zone    Buganda road flats              BUGOLOBI 
+##                     1                     2                     1 
+##                Bukoto                BUSEGA                BWAISE 
+##                     3                    11                     2 
+##            Dungu Zone            Kabalagala                Kabowa 
+##                     7                     1                    10 
+##        Kafumbe Mukasa              Kagugube                 Kagwo 
+##                     2                    10                     1 
+##          KAMPALA ROAD              Kamwokya              Kansanga 
+##                     3                    11                    12 
+##         Kanyanya zone Kasirye zone/mpererwe                Kasubi 
+##                     3                     1                    10 
+##           kasule zone                KATAZA               Kawaala 
+##                     1                     1                     6 
+##                  kazo          Kiganda zone            Kinawataka 
+##                     2                     5                     5 
+##      Kinyarwanda zone   KIREKA MIWANDA ZONE               kiruddu 
+##                     5                     1                     3 
+##               Kisenyi           Kisira zone                Kisugu 
+##                     9                     2                    18 
+##                KITEBI                Kivulu              Kiwatule 
+##                     1                     5                     7 
+##            Kizza zone              KYEBANDO          Liganda Zone 
+##                     1                     9                     1 
+##                Lugala         Lukalubo zone                LUSAZE 
+##                     3                     1                     3 
+##                Luwafu              MAKERERE       Makerere kavule 
+##                     6                     8                     3 
+##              Makindye              Masanafu                 Mbuya 
+##                     5                    16                     9 
+##                Mulago               Mutungo            NABULAGALA 
+##                     2                    16                     3 
+##               Nabweru                NAGURU              Nakasero 
+##                     2                     5                     1 
+##                Nakawa             Nakulabye            Namungoona 
+##                     4                     9                     8 
+##               NATEETE                NDEEBA               Nsambya 
+##                     4                     4                    12 
+##                Ntinda        Sebaggala zone             Tula zone 
+##                     1                     3                     1 
+##             Wandegeya           Wankulukuku         Wheeling Zone 
+##                     7                     6                     2
 ```
+
+```r
+table(R_testu$Ward, R_testu$Interviewer)
+```
+
+```
+##                        
+##                         Menya Abdmajid Bbale Denis Muwonge Allan Joshua
+##   Boma zone                          0           0                    0
+##   Buganda road flats                 0           0                    0
+##   BUGOLOBI                           0           0                    0
+##   Bukoto                             0           0                    0
+##   BUSEGA                             0           0                    0
+##   BWAISE                             0           0                    0
+##   Dungu Zone                         0           0                    0
+##   Kabalagala                         0           0                    0
+##   Kabowa                             0           0                    0
+##   Kafumbe Mukasa                     0           0                    0
+##   Kagugube                           0           0                    2
+##   Kagwo                              0           0                    0
+##   KAMPALA ROAD                       0           0                    2
+##   Kamwokya                           0           0                    0
+##   Kansanga                           0           0                    4
+##   Kanyanya zone                      0           0                    0
+##   Kasirye zone/mpererwe              0           0                    0
+##   Kasubi                             0           0                    0
+##   kasule zone                        0           0                    0
+##   KATAZA                             0           0                    0
+##   Kawaala                            0           0                    0
+##   kazo                               0           0                    0
+##   Kiganda zone                       0           0                    0
+##   Kinawataka                         0           0                    0
+##   Kinyarwanda zone                   0           0                    0
+##   KIREKA MIWANDA ZONE                0           0                    0
+##   kiruddu                            0           0                    2
+##   Kisenyi                            0           0                    0
+##   Kisira zone                        0           0                    0
+##   Kisugu                             0           0                    4
+##   KITEBI                             0           0                    0
+##   Kivulu                             0           0                    0
+##   Kiwatule                           0           0                    4
+##   Kizza zone                         0           0                    0
+##   KYEBANDO                           0           0                    0
+##   Liganda Zone                       0           0                    0
+##   Lugala                             0           0                    0
+##   Lukalubo zone                      0           0                    0
+##   LUSAZE                             0           0                    0
+##   Luwafu                             0           0                    1
+##   MAKERERE                           0           0                    1
+##   Makerere kavule                    0           0                    0
+##   Makindye                           0           0                    0
+##   Masanafu                           0           0                    0
+##   Mbuya                              0           0                    5
+##   Mulago                             0           0                    0
+##   Mutungo                            0           0                    3
+##   NABULAGALA                         0           0                    0
+##   Nabweru                            0           0                    0
+##   NAGURU                             0           0                    0
+##   Nakasero                           0           0                    0
+##   Nakawa                             0           0                    0
+##   Nakulabye                          0           0                    0
+##   Namungoona                         0           0                    0
+##   NATEETE                            0           0                    0
+##   NDEEBA                             0           0                    0
+##   Nsambya                            0           0                    0
+##   Ntinda                             0           0                    0
+##   Sebaggala zone                     0           0                    0
+##   Tula zone                          0           0                    0
+##   Wandegeya                          0           0                    2
+##   Wankulukuku                        0           0                    0
+##   Wheeling Zone                      0           0                    0
+##                        
+##                         Wambi Ken Paul Wabwire Thomas Muhindo Wilfred
+##   Boma zone                          0              1               0
+##   Buganda road flats                 0              0               0
+##   BUGOLOBI                           0              0               1
+##   Bukoto                             0              0               0
+##   BUSEGA                             0              0               0
+##   BWAISE                             0              0               0
+##   Dungu Zone                         0              0               1
+##   Kabalagala                         0              0               1
+##   Kabowa                             0              0               0
+##   Kafumbe Mukasa                     0              0               0
+##   Kagugube                           0              0               0
+##   Kagwo                              0              0               0
+##   KAMPALA ROAD                       0              1               0
+##   Kamwokya                           0              0               0
+##   Kansanga                           0              0               4
+##   Kanyanya zone                      0              3               0
+##   Kasirye zone/mpererwe              0              1               0
+##   Kasubi                             1              0               0
+##   kasule zone                        0              1               0
+##   KATAZA                             0              0               1
+##   Kawaala                            0              0               0
+##   kazo                               0              2               0
+##   Kiganda zone                       0              5               0
+##   Kinawataka                         0              0               0
+##   Kinyarwanda zone                   0              0               0
+##   KIREKA MIWANDA ZONE                0              0               1
+##   kiruddu                            0              0               0
+##   Kisenyi                            5              0               0
+##   Kisira zone                        0              2               0
+##   Kisugu                             0              0               3
+##   KITEBI                             0              0               0
+##   Kivulu                             0              1               4
+##   Kiwatule                           0              0               0
+##   Kizza zone                         0              1               0
+##   KYEBANDO                           0              0               0
+##   Liganda Zone                       0              1               0
+##   Lugala                             0              0               0
+##   Lukalubo zone                      0              1               0
+##   LUSAZE                             3              0               0
+##   Luwafu                             0              0               0
+##   MAKERERE                           0              0               0
+##   Makerere kavule                    0              3               0
+##   Makindye                           0              0               0
+##   Masanafu                          10              0               0
+##   Mbuya                              0              0               1
+##   Mulago                             0              2               0
+##   Mutungo                            0              0               3
+##   NABULAGALA                         3              0               0
+##   Nabweru                            0              2               0
+##   NAGURU                             0              0               5
+##   Nakasero                           0              0               0
+##   Nakawa                             0              0               0
+##   Nakulabye                          3              0               0
+##   Namungoona                         5              0               1
+##   NATEETE                            0              0               0
+##   NDEEBA                             4              0               0
+##   Nsambya                            0              0               3
+##   Ntinda                             0              0               1
+##   Sebaggala zone                     0              3               0
+##   Tula zone                          0              1               0
+##   Wandegeya                          0              0               0
+##   Wankulukuku                        0              0               0
+##   Wheeling Zone                      0              0               0
+##                        
+##                         Ahumuza Owen Mirembe Mary Arinitwe Mackline Alum Maria
+##   Boma zone                        0            0                 0          0
+##   Buganda road flats               0            0                 0          2
+##   BUGOLOBI                         0            0                 0          0
+##   Bukoto                           0            0                 0          0
+##   BUSEGA                           0            0                 0          0
+##   BWAISE                           0            2                 0          0
+##   Dungu Zone                       0            0                 0          6
+##   Kabalagala                       0            0                 0          0
+##   Kabowa                           0            5                 0          0
+##   Kafumbe Mukasa                   2            0                 0          0
+##   Kagugube                         2            0                 0          2
+##   Kagwo                            1            0                 0          0
+##   KAMPALA ROAD                     0            0                 0          0
+##   Kamwokya                         0            5                 0          0
+##   Kansanga                         2            0                 0          0
+##   Kanyanya zone                    0            0                 0          0
+##   Kasirye zone/mpererwe            0            0                 0          0
+##   Kasubi                           0            0                 9          0
+##   kasule zone                      0            0                 0          0
+##   KATAZA                           0            0                 0          0
+##   Kawaala                          0            0                 6          0
+##   kazo                             0            0                 0          0
+##   Kiganda zone                     0            0                 0          0
+##   Kinawataka                       3            0                 0          2
+##   Kinyarwanda zone                 1            0                 0          0
+##   KIREKA MIWANDA ZONE              0            0                 0          0
+##   kiruddu                          0            0                 0          0
+##   Kisenyi                          0            0                 4          0
+##   Kisira zone                      0            0                 0          0
+##   Kisugu                           3            0                 0          4
+##   KITEBI                           0            1                 0          0
+##   Kivulu                           0            0                 0          0
+##   Kiwatule                         3            0                 0          0
+##   Kizza zone                       0            0                 0          0
+##   KYEBANDO                         0            4                 0          0
+##   Liganda Zone                     0            0                 0          0
+##   Lugala                           0            0                 3          0
+##   Lukalubo zone                    0            0                 0          0
+##   LUSAZE                           0            0                 0          0
+##   Luwafu                           4            0                 1          0
+##   MAKERERE                         0            7                 0          0
+##   Makerere kavule                  0            0                 0          0
+##   Makindye                         0            0                 0          3
+##   Masanafu                         0            0                 6          0
+##   Mbuya                            1            0                 0          2
+##   Mulago                           0            0                 0          0
+##   Mutungo                          5            0                 0          5
+##   NABULAGALA                       0            0                 0          0
+##   Nabweru                          0            0                 0          0
+##   NAGURU                           0            0                 0          0
+##   Nakasero                         0            0                 0          1
+##   Nakawa                           0            0                 0          0
+##   Nakulabye                        0            4                 2          0
+##   Namungoona                       0            0                 2          0
+##   NATEETE                          0            0                 0          0
+##   NDEEBA                           0            0                 0          0
+##   Nsambya                          3            0                 0          0
+##   Ntinda                           0            0                 0          0
+##   Sebaggala zone                   0            0                 0          0
+##   Tula zone                        0            0                 0          0
+##   Wandegeya                        0            4                 0          1
+##   Wankulukuku                      0            3                 0          0
+##   Wheeling Zone                    0            0                 0          2
+##                        
+##                         Kasule violet Aweko Monica Nabbumba Pennina
+##   Boma zone                         0            0                0
+##   Buganda road flats                0            0                0
+##   BUGOLOBI                          0            0                0
+##   Bukoto                            0            0                3
+##   BUSEGA                           11            0                0
+##   BWAISE                            0            0                0
+##   Dungu Zone                        0            0                0
+##   Kabalagala                        0            0                0
+##   Kabowa                            5            0                0
+##   Kafumbe Mukasa                    0            0                0
+##   Kagugube                          0            0                4
+##   Kagwo                             0            0                0
+##   KAMPALA ROAD                      0            0                0
+##   Kamwokya                          5            0                1
+##   Kansanga                          0            0                2
+##   Kanyanya zone                     0            0                0
+##   Kasirye zone/mpererwe             0            0                0
+##   Kasubi                            0            0                0
+##   kasule zone                       0            0                0
+##   KATAZA                            0            0                0
+##   Kawaala                           0            0                0
+##   kazo                              0            0                0
+##   Kiganda zone                      0            0                0
+##   Kinawataka                        0            0                0
+##   Kinyarwanda zone                  0            0                4
+##   KIREKA MIWANDA ZONE               0            0                0
+##   kiruddu                           0            0                1
+##   Kisenyi                           0            0                0
+##   Kisira zone                       0            0                0
+##   Kisugu                            0            0                4
+##   KITEBI                            0            0                0
+##   Kivulu                            0            0                0
+##   Kiwatule                          0            0                0
+##   Kizza zone                        0            0                0
+##   KYEBANDO                          5            0                0
+##   Liganda Zone                      0            0                0
+##   Lugala                            0            0                0
+##   Lukalubo zone                     0            0                0
+##   LUSAZE                            0            0                0
+##   Luwafu                            0            0                0
+##   MAKERERE                          0            0                0
+##   Makerere kavule                   0            0                0
+##   Makindye                          0            0                2
+##   Masanafu                          0            0                0
+##   Mbuya                             0            0                0
+##   Mulago                            0            0                0
+##   Mutungo                           0            0                0
+##   NABULAGALA                        0            0                0
+##   Nabweru                           0            0                0
+##   NAGURU                            0            0                0
+##   Nakasero                          0            0                0
+##   Nakawa                            0            0                4
+##   Nakulabye                         0            0                0
+##   Namungoona                        0            0                0
+##   NATEETE                           4            0                0
+##   NDEEBA                            0            0                0
+##   Nsambya                           0            0                6
+##   Ntinda                            0            0                0
+##   Sebaggala zone                    0            0                0
+##   Tula zone                         0            0                0
+##   Wandegeya                         0            0                0
+##   Wankulukuku                       3            0                0
+##   Wheeling Zone                     0            0                0
+```
+
+```r
+table(R_testu$Interviewer, R_testu$Ward)
+```
+
+```
+##                       
+##                        Boma zone Buganda road flats BUGOLOBI Bukoto BUSEGA
+##   Menya Abdmajid               0                  0        0      0      0
+##   Bbale Denis                  0                  0        0      0      0
+##   Muwonge Allan Joshua         0                  0        0      0      0
+##   Wambi Ken Paul               0                  0        0      0      0
+##   Wabwire Thomas               1                  0        0      0      0
+##   Muhindo Wilfred              0                  0        1      0      0
+##   Ahumuza Owen                 0                  0        0      0      0
+##   Mirembe Mary                 0                  0        0      0      0
+##   Arinitwe Mackline            0                  0        0      0      0
+##   Alum Maria                   0                  2        0      0      0
+##   Kasule violet                0                  0        0      0     11
+##   Aweko Monica                 0                  0        0      0      0
+##   Nabbumba Pennina             0                  0        0      3      0
+##                       
+##                        BWAISE Dungu Zone Kabalagala Kabowa Kafumbe Mukasa
+##   Menya Abdmajid            0          0          0      0              0
+##   Bbale Denis               0          0          0      0              0
+##   Muwonge Allan Joshua      0          0          0      0              0
+##   Wambi Ken Paul            0          0          0      0              0
+##   Wabwire Thomas            0          0          0      0              0
+##   Muhindo Wilfred           0          1          1      0              0
+##   Ahumuza Owen              0          0          0      0              2
+##   Mirembe Mary              2          0          0      5              0
+##   Arinitwe Mackline         0          0          0      0              0
+##   Alum Maria                0          6          0      0              0
+##   Kasule violet             0          0          0      5              0
+##   Aweko Monica              0          0          0      0              0
+##   Nabbumba Pennina          0          0          0      0              0
+##                       
+##                        Kagugube Kagwo KAMPALA ROAD Kamwokya Kansanga
+##   Menya Abdmajid              0     0            0        0        0
+##   Bbale Denis                 0     0            0        0        0
+##   Muwonge Allan Joshua        2     0            2        0        4
+##   Wambi Ken Paul              0     0            0        0        0
+##   Wabwire Thomas              0     0            1        0        0
+##   Muhindo Wilfred             0     0            0        0        4
+##   Ahumuza Owen                2     1            0        0        2
+##   Mirembe Mary                0     0            0        5        0
+##   Arinitwe Mackline           0     0            0        0        0
+##   Alum Maria                  2     0            0        0        0
+##   Kasule violet               0     0            0        5        0
+##   Aweko Monica                0     0            0        0        0
+##   Nabbumba Pennina            4     0            0        1        2
+##                       
+##                        Kanyanya zone Kasirye zone/mpererwe Kasubi kasule zone
+##   Menya Abdmajid                   0                     0      0           0
+##   Bbale Denis                      0                     0      0           0
+##   Muwonge Allan Joshua             0                     0      0           0
+##   Wambi Ken Paul                   0                     0      1           0
+##   Wabwire Thomas                   3                     1      0           1
+##   Muhindo Wilfred                  0                     0      0           0
+##   Ahumuza Owen                     0                     0      0           0
+##   Mirembe Mary                     0                     0      0           0
+##   Arinitwe Mackline                0                     0      9           0
+##   Alum Maria                       0                     0      0           0
+##   Kasule violet                    0                     0      0           0
+##   Aweko Monica                     0                     0      0           0
+##   Nabbumba Pennina                 0                     0      0           0
+##                       
+##                        KATAZA Kawaala kazo Kiganda zone Kinawataka
+##   Menya Abdmajid            0       0    0            0          0
+##   Bbale Denis               0       0    0            0          0
+##   Muwonge Allan Joshua      0       0    0            0          0
+##   Wambi Ken Paul            0       0    0            0          0
+##   Wabwire Thomas            0       0    2            5          0
+##   Muhindo Wilfred           1       0    0            0          0
+##   Ahumuza Owen              0       0    0            0          3
+##   Mirembe Mary              0       0    0            0          0
+##   Arinitwe Mackline         0       6    0            0          0
+##   Alum Maria                0       0    0            0          2
+##   Kasule violet             0       0    0            0          0
+##   Aweko Monica              0       0    0            0          0
+##   Nabbumba Pennina          0       0    0            0          0
+##                       
+##                        Kinyarwanda zone KIREKA MIWANDA ZONE kiruddu Kisenyi
+##   Menya Abdmajid                      0                   0       0       0
+##   Bbale Denis                         0                   0       0       0
+##   Muwonge Allan Joshua                0                   0       2       0
+##   Wambi Ken Paul                      0                   0       0       5
+##   Wabwire Thomas                      0                   0       0       0
+##   Muhindo Wilfred                     0                   1       0       0
+##   Ahumuza Owen                        1                   0       0       0
+##   Mirembe Mary                        0                   0       0       0
+##   Arinitwe Mackline                   0                   0       0       4
+##   Alum Maria                          0                   0       0       0
+##   Kasule violet                       0                   0       0       0
+##   Aweko Monica                        0                   0       0       0
+##   Nabbumba Pennina                    4                   0       1       0
+##                       
+##                        Kisira zone Kisugu KITEBI Kivulu Kiwatule Kizza zone
+##   Menya Abdmajid                 0      0      0      0        0          0
+##   Bbale Denis                    0      0      0      0        0          0
+##   Muwonge Allan Joshua           0      4      0      0        4          0
+##   Wambi Ken Paul                 0      0      0      0        0          0
+##   Wabwire Thomas                 2      0      0      1        0          1
+##   Muhindo Wilfred                0      3      0      4        0          0
+##   Ahumuza Owen                   0      3      0      0        3          0
+##   Mirembe Mary                   0      0      1      0        0          0
+##   Arinitwe Mackline              0      0      0      0        0          0
+##   Alum Maria                     0      4      0      0        0          0
+##   Kasule violet                  0      0      0      0        0          0
+##   Aweko Monica                   0      0      0      0        0          0
+##   Nabbumba Pennina               0      4      0      0        0          0
+##                       
+##                        KYEBANDO Liganda Zone Lugala Lukalubo zone LUSAZE Luwafu
+##   Menya Abdmajid              0            0      0             0      0      0
+##   Bbale Denis                 0            0      0             0      0      0
+##   Muwonge Allan Joshua        0            0      0             0      0      1
+##   Wambi Ken Paul              0            0      0             0      3      0
+##   Wabwire Thomas              0            1      0             1      0      0
+##   Muhindo Wilfred             0            0      0             0      0      0
+##   Ahumuza Owen                0            0      0             0      0      4
+##   Mirembe Mary                4            0      0             0      0      0
+##   Arinitwe Mackline           0            0      3             0      0      1
+##   Alum Maria                  0            0      0             0      0      0
+##   Kasule violet               5            0      0             0      0      0
+##   Aweko Monica                0            0      0             0      0      0
+##   Nabbumba Pennina            0            0      0             0      0      0
+##                       
+##                        MAKERERE Makerere kavule Makindye Masanafu Mbuya Mulago
+##   Menya Abdmajid              0               0        0        0     0      0
+##   Bbale Denis                 0               0        0        0     0      0
+##   Muwonge Allan Joshua        1               0        0        0     5      0
+##   Wambi Ken Paul              0               0        0       10     0      0
+##   Wabwire Thomas              0               3        0        0     0      2
+##   Muhindo Wilfred             0               0        0        0     1      0
+##   Ahumuza Owen                0               0        0        0     1      0
+##   Mirembe Mary                7               0        0        0     0      0
+##   Arinitwe Mackline           0               0        0        6     0      0
+##   Alum Maria                  0               0        3        0     2      0
+##   Kasule violet               0               0        0        0     0      0
+##   Aweko Monica                0               0        0        0     0      0
+##   Nabbumba Pennina            0               0        2        0     0      0
+##                       
+##                        Mutungo NABULAGALA Nabweru NAGURU Nakasero Nakawa
+##   Menya Abdmajid             0          0       0      0        0      0
+##   Bbale Denis                0          0       0      0        0      0
+##   Muwonge Allan Joshua       3          0       0      0        0      0
+##   Wambi Ken Paul             0          3       0      0        0      0
+##   Wabwire Thomas             0          0       2      0        0      0
+##   Muhindo Wilfred            3          0       0      5        0      0
+##   Ahumuza Owen               5          0       0      0        0      0
+##   Mirembe Mary               0          0       0      0        0      0
+##   Arinitwe Mackline          0          0       0      0        0      0
+##   Alum Maria                 5          0       0      0        1      0
+##   Kasule violet              0          0       0      0        0      0
+##   Aweko Monica               0          0       0      0        0      0
+##   Nabbumba Pennina           0          0       0      0        0      4
+##                       
+##                        Nakulabye Namungoona NATEETE NDEEBA Nsambya Ntinda
+##   Menya Abdmajid               0          0       0      0       0      0
+##   Bbale Denis                  0          0       0      0       0      0
+##   Muwonge Allan Joshua         0          0       0      0       0      0
+##   Wambi Ken Paul               3          5       0      4       0      0
+##   Wabwire Thomas               0          0       0      0       0      0
+##   Muhindo Wilfred              0          1       0      0       3      1
+##   Ahumuza Owen                 0          0       0      0       3      0
+##   Mirembe Mary                 4          0       0      0       0      0
+##   Arinitwe Mackline            2          2       0      0       0      0
+##   Alum Maria                   0          0       0      0       0      0
+##   Kasule violet                0          0       4      0       0      0
+##   Aweko Monica                 0          0       0      0       0      0
+##   Nabbumba Pennina             0          0       0      0       6      0
+##                       
+##                        Sebaggala zone Tula zone Wandegeya Wankulukuku
+##   Menya Abdmajid                    0         0         0           0
+##   Bbale Denis                       0         0         0           0
+##   Muwonge Allan Joshua              0         0         2           0
+##   Wambi Ken Paul                    0         0         0           0
+##   Wabwire Thomas                    3         1         0           0
+##   Muhindo Wilfred                   0         0         0           0
+##   Ahumuza Owen                      0         0         0           0
+##   Mirembe Mary                      0         0         4           3
+##   Arinitwe Mackline                 0         0         0           0
+##   Alum Maria                        0         0         1           0
+##   Kasule violet                     0         0         0           3
+##   Aweko Monica                      0         0         0           0
+##   Nabbumba Pennina                  0         0         0           0
+##                       
+##                        Wheeling Zone
+##   Menya Abdmajid                   0
+##   Bbale Denis                      0
+##   Muwonge Allan Joshua             0
+##   Wambi Ken Paul                   0
+##   Wabwire Thomas                   0
+##   Muhindo Wilfred                  0
+##   Ahumuza Owen                     0
+##   Mirembe Mary                     0
+##   Arinitwe Mackline                0
+##   Alum Maria                       2
+##   Kasule violet                    0
+##   Aweko Monica                     0
+##   Nabbumba Pennina                 0
+```
+
+```r
+table(R_testu$Social_Class, R_testu$A2)
+```
+
+```
+##                  
+##                   18 19 20 21 22 23 24 25 26 27 28 30
+##   Social Class D   0  0  0  0  0  0  0  0  0  0  0  0
+##   Social Class C2  8 25 19  9  9 10  7  6  0  2  1  1
+##   Social Class C1 11 34 24 13  5  8  6  4  2  2  1  0
+##   Social Class B   7 26 27 10  9  9 12  6  2  1  0  1
+##   Social Class A   0  0  0  0  0  0  0  0  0  0  0  0
+```
+
+```r
+table(R_testu$A2, R_testu$Social_Class)
+```
+
+```
+##     
+##      Social Class D Social Class C2 Social Class C1 Social Class B
+##   18              0               8              11              7
+##   19              0              25              34             26
+##   20              0              19              24             27
+##   21              0               9              13             10
+##   22              0               9               5              9
+##   23              0              10               8              9
+##   24              0               7               6             12
+##   25              0               6               4              6
+##   26              0               0               2              2
+##   27              0               2               2              1
+##   28              0               1               1              0
+##   30              0               1               0              1
+##     
+##      Social Class A
+##   18              0
+##   19              0
+##   20              0
+##   21              0
+##   22              0
+##   23              0
+##   24              0
+##   25              0
+##   26              0
+##   27              0
+##   28              0
+##   30              0
+```
+
+
+## Descriptive Statistics
+
+
+```r
+library(mosaic)
+#favstats(~A2, data=R_testu)
+favstats(~A2, data=R_testu)[c("min", "max", "mean","median")]
+```
+
+```
+##  min max     mean median
+##   18  30 20.93691     20
+```
+
+```r
+#favstats(~B16, data=R_testu)
+favstats(~B16, data=R_testu)[c("min", "max", "mean","median")]
+```
+
+```
+##    min   max     mean median
+##  2e+05 3e+06 769526.8  7e+05
+```
+
+## ggplot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
