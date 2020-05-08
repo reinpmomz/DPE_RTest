@@ -3,9 +3,9 @@ title: "DPE_RTest"
 author: "Reinp"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
   html_document: 
     keep_md: yes
+  pdf_document: default
   word_document: default
 ---
 

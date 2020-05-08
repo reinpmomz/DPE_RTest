@@ -1,7 +1,7 @@
 ---
 title: "DPE_RTest"
 author: "Reinp"
-date: "2020-05-07"
+date: "2020-05-08"
 output:
   html_document: 
     keep_md: yes
@@ -1181,10 +1181,222 @@ favstats(~B16, data=R_testu)[c("min", "max", "mean","median")]
 ##  2e+05 3e+06 769526.8  7e+05
 ```
 
-## ggplot
+## ggplot- lineplot
+
+
+```r
+R_testuplot <- R_testu%>%
+group_by(A2) %>%
+summarise(B16 = mean(B16))
+
+
+ggplot(R_testuplot, aes(A2, B16))+
+  labs(title="Avearage amount willing to be paid for next degree/diploma", 
+       x="Age of Respondents", y="Amount per Semester") +
+  theme(axis.title=element_text(face="bold.italic", size="12", color="brown"), 
+        axis.text = element_text(size = 8, face="bold"), 
+        plot.title=element_text(size=12, face="bold", color="red", hjust = 0.5))+
+  geom_point(size=2)+
+  geom_line(colour="blue", size=1)+
+  geom_text(aes(label=R_testuplot$A2), nudge_x = 0.2, size=3)+
+  scale_x_continuous(breaks = c(16, 18, 20, 22, 24, 26, 28, 30, 32), limits=c(17,31))+
+  scale_y_continuous(breaks = c(0, 200000, 400000, 600000, 800000, 1000000, 1200000), 
+                     limits=c(0,1200000))
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
+```r
+#If the plot is on the screen ggsave(“path/filename.png”)
+
+#If you have a plot object ggsave(myplot, file=“path/filename.png”)
+
+#Specify size ggsave(myplot, “path/filename.png”, width=6, height=4)
+
+# any plot format (pdf, png, eps, svg, jpg)
+```
+
+## ggplot Scatterplot
+
+```r
+ggplot(R_testu, aes(A2, B16))+
+  labs(title="Amount willing to be paid for next degree/diploma", 
+       x="Age of Respondents", y="Amount per Semester") +
+  theme(axis.title=element_text(face="bold.italic", size="12", color="brown"), 
+        axis.text = element_text(size = 8, face="bold"), 
+        plot.title=element_text(size=12, face="bold", color="red", hjust = 0.5))+
+  geom_point(size=2)+
+  scale_x_continuous(breaks = c(16, 18, 20, 22, 24, 26, 28, 30, 32), limits=c(17,31))+
+  scale_y_continuous(breaks = c(0, 250000, 500000, 750000, 1000000, 1250000, 1500000, 
+                  1750000, 2000000, 2250000, 2500000, 2750000, 3000000, 3250000),
+                  limits=c(0,3250000))
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
+## Proportion
+
+```r
+#Your school an all secondary girls school?
+table(R_testu$B4)
+```
+
+```
+## 
+## Yes  No 
+##  35 282
+```
+
+```r
+prop.table(table(R_testu$B4))
+```
+
+```
+## 
+##       Yes        No 
+## 0.1104101 0.8895899
+```
+
+## Filter data
 
 
 
+## Additional Analysis
+
+```r
+nrow(R_test)
+```
+
+```
+## [1] 321
+```
+
+```r
+nrow(R_testu)
+```
+
+```
+## [1] 317
+```
+
+```r
+R_testu1 = subset(R_testu, select = -c(Q_25_S,Q_32_S) ) #Delete column by name
+
+R_testu1 <- na.omit(R_testu1) # Getting rid of missing data
+View(R_testu1)
+attach(R_testu1)
+nrow(R_testu1)
+```
+
+```
+## [1] 299
+```
+
+```r
+which(is.na(R_testu1)) #check for missing values
+```
+
+```
+## integer(0)
+```
+
+```r
+sum(is.na(R_testu1))
+```
+
+```
+## [1] 0
+```
+
+```r
+library(car)
+library(MASS) #So that distributions that must be non-zero can make sense of my data
+
+
+qqp(R_testu1$B16+1, "norm", main="Q-Q Plot ~ Normal model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+
+```
+## [1]  26 176
+```
+
+```r
+qqp(R_testu1$B16+1, "lnorm", main="Q-Q Plot ~ LogNormal model") #lnorm is lognormal
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-2.png)<!-- -->
+
+```
+## [1]  26 176
+```
+
+```r
+qqp(R_testu1$B16+1, "exp", main="Q-Q Plot ~ Exponential model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-3.png)<!-- -->
+
+```
+## [1]  26 176
+```
+
+```r
+#qqp requires estimates of the parameters of the negative binomial, Poisson
+# and gamma distributions. You can generate estimates using the fitdistr function.
+#negative binomial and gamma distributions can only handle positive numbers.
+#Poisson distribution can only handle positive whole numbers.
+#Binomial and Poisson distributions are different from the others because they are
+#discrete rather than continuous, which means they quantify distinct,
+#countable events or the probability of these events
+
+nbinom <- fitdistr(R_testu$B16+1, "Negative Binomial")
+qqp(R_testu$B16+1, "nbinom", size = nbinom$estimate[[1]], mu =
+nbinom$estimate[[2]], main="Q-Q Plot ~ Negative Binomial model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-4.png)<!-- -->
+
+```
+## [1]  27 184
+```
+
+```r
+pois <- fitdistr(R_testu1$B16+1, "Poisson")
+qqp(R_testu1$B16+1, "pois", lambda=pois$estimate, main="Q-Q Plot ~ Poisson model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-5.png)<!-- -->
+
+```
+## [1]  26 176
+```
+
+```r
+gamma <- fitdistr(R_testu1$B16+1, "gamma",
+list(shape = 1, rate = 0.1), lower = 0.4)
+qqp(R_testu1$B16+1, "gamma", shape = gamma$estimate[[1]], rate =
+gamma$estimate[[2]], main="Q-Q Plot ~ Gamma model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-6.png)<!-- -->
+
+```
+## [1]  26 176
+```
+
+```r
+weibull <- fitdistr(R_testu1$B16+1, "weibull")
+qqp(R_testu1$B16+1, "weibull", shape = weibull$estimate[[1]],
+scale=weibull$estimate[[2]], main="Q-Q Plot ~ Weibull model")
+```
+
+![](DPE_RTest_files/figure-html/unnamed-chunk-13-7.png)<!-- -->
+
+```
+## [1]  26 176
+```
 
 
 
