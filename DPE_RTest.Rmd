@@ -15,33 +15,38 @@ output:
 
 ```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-#echo=FALSE indicates that the code will not be shown in the final document 
-#(though any results/output would still be displayed).
-#include=FALSE to have the chunk evaluated, but neither the code nor its output displayed
-# warning=FALSE and message=FALSE suppress any R warnings or messages from being included 
-#in the final document
+
 ```
 
-## loading Relevant packages and Data Set
+
+## 5. Import data into r
+
 ```{r}
-library(plyr)
+
 library(tidyverse)
+library(lubridate)
 ## tidyverse includes readr, ggplot2, dplyr, forcats, tibble, tidyr, purrr, stringr
 library(stats)
-library(psych)
+library(readxl)
+
 
 
 ## Reading our dataset
-setwd('E:/Documents/Reinp/GitHub Respositories/DPE_RTest')
+setwd('F:/Documents/Reinp/GitHub Respositories/DPE_RTest')
 
 R_test <- read_csv("R_test_dataset.csv")
 View(R_test)
-attach(R_test)
+
+R_test <- R_test%>%
+  mutate(Q_2 = dmy(Q_2))
+
 
 ```
 
-## Structure of the data
-```{r}
+
+### Structure of the data
+
+```{r, include=FALSE}
 
 head(R_test)
 
@@ -68,35 +73,44 @@ names(R_test) #display variable names
 ```
 
 
-## Missing data
+### Missing data
+
 ```{r}
-complete.cases(R_test) ##print logical vector indicating complete rows
+#complete.cases(R_test) ##print logical vector indicating complete rows
                        ##(i.e. rows without NA)
 
-which(!complete.cases(R_test)) #print incomplete cases (rows with NA)
+#which(!complete.cases(R_test)) #print incomplete cases (rows with NA)
 
 #R_test[complete.cases(R_test), ] ## Keep only the complete rows
 
 #data_complete <- R_test[complete.cases(R_test), ] ## Store the complete cases subset in a new
                                                    ##data frame
 
-which(is.na(R_test)) #check for missing values
+#which(is.na(R_test)) #check for missing values
+
 sum(is.na(R_test))
+
+sapply(R_test,function(x) sum(is.na(x)))
 
 ```
 
-## Duplicated Cases
+
+## 6. Duplicated Cases
+
 ```{r}
-duplicated(R_test$SbjNum)
+#duplicated(R_test$SbjNum)
 sum(duplicated(R_test$SbjNum))
 table(duplicated(R_test$SbjNum))
 
-mean(duplicated(R_test$SbjNum)) #proportion of repeat cases
+#mean(duplicated(R_test$SbjNum)) #proportion of repeat cases
 
-sum(duplicated(R_test$SbjNum))/nrow(R_test)
+#sum(duplicated(R_test$SbjNum))/nrow(R_test)
 ```
 
-## unique cases
+
+## 7. total number of unique interviews 
+
+
 ```{r}
 
 #unique(R_test$SbjNum)
@@ -105,55 +119,74 @@ sum(duplicated(R_test$SbjNum))/nrow(R_test)
 
 ## data with unique SbjNum
 
-R_testu <- R_test[!duplicated(R_test$SbjNum),]
-View(R_testu)
-attach(R_testu)
+#R_testu <- R_test[!duplicated(R_test$SbjNum),]
+
+
+R_testu <- R_test%>%
+  filter(SbjNum == unique(SbjNum))
+
 
 nrow(R_testu)
 ```
 
-## Assigning value labels to variables
+
+## 8. Assigning value labels to variables
 ```{r}
-R_testu$Interviewer <- factor(R_testu$Interviewer,
-levels = c(1,2,3,4,5,6,7,8,9,10,11,12,13),
-labels = c("Menya Abdmajid", "Bbale Denis", "Muwonge Allan Joshua", "Wambi Ken Paul", 
-           "Wabwire Thomas", "Muhindo Wilfred", "Ahumuza Owen", "Mirembe Mary",
-           "Arinitwe Mackline", "Alum Maria", "Kasule violet", "Aweko Monica", 
-           "Nabbumba Pennina"))
 
-R_testu$S2 <- factor(R_testu$S2,
-levels = c(1,2,3,4),
-labels = c("17 and below", "18-25", "25-30", "31 and above"))
+R_testu <- R_testu %>%
+  mutate(Interviewer = if_else(Interviewer == 1, "Menya Abdmajid",
+                        if_else(Interviewer == 2, "Bbale Denis",
+                        if_else(Interviewer == 3, "Muwonge Allan Joshua",
+                        if_else(Interviewer == 4, "Wambi Ken Paul",        
+                        if_else(Interviewer == 5, "Wabwire Thomas", 
+                        if_else(Interviewer == 6, "Muhindo Wilfred",
+                        if_else(Interviewer == 7, "Ahumuza Owen",
+                        if_else(Interviewer == 8, "Mirembe Mary",
+                        if_else(Interviewer == 9, "Arinitwe Mackline",        
+                        if_else(Interviewer == 10, "Alum Maria",
+                        if_else(Interviewer == 11, "Kasule violet",        
+                        if_else(Interviewer == 12, "Aweko Monica", "Nabbumba Pennina"       
+                                )))))))))))))%>%
+  mutate(S2 = if_else(S2 == 1, "17 and below",
+                        if_else(S2 == 2, "18-25",
+                        if_else(S2 == 3, "26-30", "31 and above" 
+                                ))))%>%
+  mutate(Social_Class = if_else(Social_Class == 1, "Social Class D",
+                        if_else(Social_Class == 2, "Social Class C2",
+                        if_else(Social_Class == 3, "Social Class C1", 
+                         if_else(Social_Class == 4, "Social Class B", "Social Class A" 
+                                )))))%>%
+  mutate(B4 = if_else(B4 == 1, "Yes", "No"))%>%
+  mutate(B17 = if_else(B17 == 1, "Extremely ready",
+                        if_else(B17 == 2, "Somewhat ready",
+                        if_else(B17 == 3, "Neutral", 
+                         if_else(B17 == 4, "Not ready", "Definitely not ready" 
+                                )))))%>%
+  mutate(C1 = if_else(B17 == 1, "I have been employed (for example in an office, restaurant,",
+              if_else(B17 == 2, "I am self-employed (for example, on my own farm or family's",
+              if_else(B17 == 3, "I have been employed as an unpaid intern", 
+              if_else(B17 == 4, "I have been engaged in household activities including agricu",
+                      "I have not been employed" 
+                                )))))
 
-R_testu$Social_Class <- factor(R_testu$Social_Class,
-levels = c(1,2,3,4,5),
-labels = c("Social Class D", "Social Class C2", "Social Class C1", "Social Class B", 
-           "Social Class A"))
-
-R_testu$B4 <- factor(R_testu$B4,
-levels = c(1,2),
-labels = c("Yes", "No"))
-
-R_testu$B17 <- factor(R_testu$B17,
-levels = c(1,2,3,4,5),
-labels = c("Extremely ready", "Somewhat ready", "Neutral", "Not ready", "Definitely not ready"))
-
-R_testu$C1 <- factor(R_testu$C1,
-levels = c(1,2,3,4,5),
-labels = c("I have been employed (for example in an office, restaurant,", 
-           "I am self-employed (for example, on my own farm or family's", 
-           "I have been employed as an unpaid intern", 
-           "I have been engaged in household activities including agricu", 
-           "I have not been employed"))
 
 ```
 
 
-## Distribution of variables
+## 9. Number of Interviews conducted by each interviewer
+
 ```{r}
 
+library(knitr)
 #DollarSign Syntax
-table(R_testu$Interviewer)
+
+kable(table(R_testu$Interviewer))
+```
+
+
+## 10. Clean up the ward variable and then compute the number of interviews per ward 
+
+```{r}
 
 which(is.na(R_testu$Ward)) #check for missing values in ward
 
@@ -245,40 +278,57 @@ R_testu$Ward <- gsub("wankulukuku", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WANKULUKUKU", "Wankulukuku", R_testu$Ward)
 R_testu$Ward <- gsub("WUNKULUKUKU", "Wankulukuku", R_testu$Ward)
 
-table(R_testu$Ward)
+kable(table(R_testu$Ward))
 
-table(R_testu$Ward, R_testu$Interviewer)
+```
 
-table(R_testu$Interviewer, R_testu$Ward)
+## 11. interviews were conducted in every ward per interviewer 
 
-table(R_testu$Social_Class, R_testu$A2)
+```{r}
 
-table(R_testu$A2, R_testu$Social_Class)
+kable(table(R_testu$Ward, R_testu$Interviewer))
+
+kable(table(R_testu$Interviewer, R_testu$Ward))
+
 ```
 
 
-## Descriptive Statistics
+## 12.	Would you say older people are in high Social class?
+
+```{r}
+
+
+kable(table(R_testu$Social_Class, R_testu$A2))
+
+kable(table(R_testu$A2, R_testu$Social_Class))
+
+kable(table(R_testu$Social_Class, R_testu$S2))
+
+kable(table(R_testu$S2, R_testu$Social_Class))
+
+```
+
+
+## 13.	What is the minimum, maximum, average and median age of the respondents 
 
 ```{r}
 library(mosaic)
 #favstats(~A2, data=R_testu)
-favstats(~A2, data=R_testu)[c("min", "max", "mean","median")]
+kable(favstats(~A2, data=R_testu)[c("min", "max", "mean","median")])
 
 #favstats(~B16, data=R_testu)
-favstats(~B16, data=R_testu)[c("min", "max", "mean","median")]
+kable(favstats(~B16, data=R_testu)[c("min", "max", "mean","median")])
 
 ```
 
-## ggplot- lineplot
+## 14.	Plot A2 against B16. Add title and axes labels 
+
+### ggplot- lineplot
 
 ```{r}
 
-R_testuplot <- R_testu%>%
-group_by(A2) %>%
-summarise(B16 = mean(B16))
 
-
-ggplot(R_testuplot, aes(A2, B16))+
+ggplot(R_testu%>%group_by(A2) %>%summarise(B16 = mean(B16)), aes(A2, B16))+
   labs(title="Avearage amount willing to be paid for next degree/diploma", 
        x="Age of Respondents", y="Amount per Semester") +
   theme(axis.title=element_text(face="bold.italic", size="12", color="brown"), 
@@ -286,7 +336,7 @@ ggplot(R_testuplot, aes(A2, B16))+
         plot.title=element_text(size=12, face="bold", color="red", hjust = 0.5))+
   geom_point(size=2)+
   geom_line(colour="blue", size=1)+
-  geom_text(aes(label=R_testuplot$A2), nudge_x = 0.2, size=3)+
+  #geom_text(aes(label=R_testuplot$A2), nudge_x = 0.2, size=3)+
   scale_x_continuous(breaks = c(16, 18, 20, 22, 24, 26, 28, 30, 32), limits=c(17,31))+
   scale_y_continuous(breaks = c(0, 200000, 400000, 600000, 800000, 1000000, 1200000), 
                      limits=c(0,1200000))
@@ -302,7 +352,9 @@ ggplot(R_testuplot, aes(A2, B16))+
 
 ```
 
-## ggplot Scatterplot
+### ggplot Scatterplot
+
+
 ```{r}
 
 ggplot(R_testu, aes(A2, B16))+
@@ -319,24 +371,31 @@ ggplot(R_testu, aes(A2, B16))+
 
 ```
 
-## Proportion
+## 15.	What is the proportion of girls who are in non-girls only schools 
+
+
 ```{r}
-#Your school an all secondary girls school?
+#Was your school an all secondary girls school?
 table(R_testu$B4)
 
 prop.table(table(R_testu$B4))
 
 ```
 
-## Filter data
+## 16. dataset of the respondents who are aged between 18 – 25 years only 
+
 ```{r}
+R_testu18_25 <- subset(R_testu, S2 == "18-25")
 
-
+#write_excel_csv(R_testu18_25, "R_testu18_25.csv")
 
 ```
 
 
-## Additional Analysis
+## 17.	Conduct any additional analysis in the data 
+
+### Distribution of B16 Variable
+
 ```{r}
 
 nrow(R_test)
@@ -345,8 +404,7 @@ nrow(R_testu)
 R_testu1 = subset(R_testu, select = -c(Q_25_S,Q_32_S) ) #Delete column by name
 
 R_testu1 <- na.omit(R_testu1) # Getting rid of missing data
-View(R_testu1)
-attach(R_testu1)
+
 nrow(R_testu1)
 
 which(is.na(R_testu1)) #check for missing values
@@ -390,13 +448,169 @@ scale=weibull$estimate[[2]], main="Q-Q Plot ~ Weibull model")
 
 ```
 
+### Multiple Regression
+
+```{r}
+#convert categorical variables to integer data types for regression purpose
+
+R_testu_reg <- R_testu%>%
+  mutate(S3 = if_else(S3 == 1, "None/did not complete",
+              if_else(S3 == 2, "Uganda Certificate of Education (UCE) 1-2 passes",
+              if_else(S3 == 3, "Uganda Certificate of Education (UCE) 3-5 passes",
+              if_else(S3 == 4, "Uganda Certificate of Education (UCE) 5 or more passes",        
+              if_else(S3 == 5, "Uganda Advanced Certificate of Education (UACE) – 1 principa", 
+              if_else(S3 == 6, "Uganda Advanced Certificate of Education (UACE) 2 principal", 
+                    "Uganda Advanced Certificate of Education (UACE) 3 principals")))))))%>%
+  mutate(S4 = if_else(S4 == 1, "Yes", "No"))%>%
+  mutate(S5_a = if_else(S5_a == 1, "Yes",
+                        if_else(S5_a == 2, "No", "I don't know")))%>%
+  mutate(A5 = if_else(A5 == 1, "Central",
+              if_else(A5 == 2, "Western",
+              if_else(A5 == 3, "Eastern",
+              if_else(A5 == 4, "Northern", "Other")))))%>%
+  mutate(A8 = if_else(A8 == 1, "Single",
+              if_else(A8 == 2, "Married",
+              if_else(A8 == 3, "Divorced or Separated", "Widowed"))))%>%
+  mutate(A9 = if_else(A9 == 1, "I do not have children",
+              if_else(A9 == 2, "I have 1 child",
+              if_else(A9 == 3, "I have 2 children",
+              if_else(A9 == 4, "I have 3 children", "I have more than 3 children")))))%>%
+  mutate(A10 = if_else(A10 == 1, "I live alone",
+              if_else(A10 == 2, "I live with one other person",
+              if_else(A10 == 3, "I live with 2-3 other people",
+              if_else(A10 == 4, "I live with 4-6 other people",
+                      "I live with 7 or more people")))))%>%
+  mutate(A12 = if_else(A12 == 1, "I am the head of the household",
+              if_else(A12 == 2, "I am the wife of the head of household",
+              if_else(A12 == 3, "I am the daughter of the head of household",
+              if_else(A12 == 4, "I am a relative of the head of household",        
+              if_else(A12 == 5, "I am a friend of the head of household", 
+              "Other"))))))%>%
+  mutate(B8 = if_else(B8 == 1, "Diploma",
+                        if_else(B8 == 2, "Technical certificate", "Bachelor's degree")))%>%
+  mutate(S2 = factor(S2))%>%
+  mutate(S3 = factor(S3))%>%
+  mutate(S4 = factor(S4))%>%
+  mutate(Social_Class = factor(Social_Class))%>%
+  mutate(A5 = factor(A5))%>%
+  mutate(A8 = factor(A8))%>%
+  mutate(A9 = factor(A9))%>%
+  mutate(A10 = factor(A10))%>%
+  mutate(A12 = factor(A12))%>%
+  mutate(B4 = factor(B4))%>%
+  mutate(B8 = factor(B8))%>%
+  mutate(B17 = factor(B17))%>%
+  dplyr:: rename(age_grouped = "S2",
+                 secondary_school_certificate = "S3",
+                 enrolled_tertiary_school_certificate = "S4",
+                 age = "A2",
+                 region_of_origin = "A5",
+                 marital_status = "A8",
+                 No_of_children = "A9",
+                 No_people_living_with = "A10",
+                 relationship_to_head_of_household = "A12",
+                 all_secondary_girls_school = "B4",
+                 career_next_level_of_education = "B8",
+                 willing_to_pay_next_level_of_education = "B16",
+                 career_ready = "B17")%>%
+dplyr:: select(7,10,13,14, 16,17, 18, 19, 22, 23, 24, 25)%>%
+  drop_na()
+
+select
+
+str(R_testu_reg)
+
+```
 
 
 
+```{r}
+mlm1a <- lm(willing_to_pay_next_level_of_education ~ .,
+data=R_testu_reg) #multiple regression
+summary(mlm1a)
+```
 
 
+```{r}
+# stepwise regression
+
+library(MASS)
+summary(stepAIC(mlm1a))
 
 
+```
+
+
+```{r}
+
+R_testu_reg$p1 <- round(predict(mlm1a, R_testu_reg),0)
+
+
+sigma(mlm1a) #Residual Standard Error (RSE)
+
+
+#accuracy of the model.
+sigma(mlm1a)/mean(R_testu_reg$willing_to_pay_next_level_of_education) #The error rate
+
+```
+
+
+### Poisson Regression
+
+
+```{r}
+
+mglm1a <-glm(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg,
+             family = poisson)
+summary(mglm1a)
+
+
+```
+
+If the Residual Deviance is greater than the degrees of freedom, then over-dispersion exists. This means that the estimates are correct, but the standard errors (standard deviation) are wrong and unaccounted for by the model.
+
+To have a more correct standard error we can use a quasi-poisson model. It uses the mean regression function and the variance function from the Poisson GLM but leaves the dispersion parameter unrestricted. Thus, dispersion parameter is not assumed to be fixed at 1 but is estimated from the data.
+
+This leads to the same coefficient estimates as the standard Poisson model but inference is adjusted for over-dispersion.
+
+
+### QuasiPoisson Regression
+
+The model leads to an estimated dispersion parameter  which is clearly larger than 1, confirming that over-dispersion is present in the data.
+
+```{r}
+
+mglm1b <-glm(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg,
+             family = quasipoisson)
+summary(mglm1b)
+
+```
+
+### Negative binomial Model
+
+If Theta is not known but to be estimated from the data, the negative binomial model is not a
+special case of the general GLM—however, an ML fit can easily be computed re-using GLM
+methodology by iterating estimation of Beta given Theta and vice versa. This leads to ML estimates
+for both Beta and Theta which can be computed.
+
+```{r}
+
+mglm1c <-glm.nb(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg)
+summary(mglm1c)
+
+```
+
+
+```{r}
+
+R_testu_reg$p2 <- round(predict(mglm1a, R_testu_reg, type = "response"),0)
+
+R_testu_reg$p3 <- round(predict(mglm1b, R_testu_reg, type = "response"),0)
+
+R_testu_reg$p4 <- round(predict(mglm1c, R_testu_reg, type = "response"),0)
+
+
+```
 
 
 

@@ -162,7 +162,7 @@ f.	C1
 
 13.	What is the minimum, maximum, average and median age of the respondents **(2mrks)?**
 
-14.	Plot A2 against B16. Add title and axes labels **(5mrks).** 
+14.	Plot A2 against B16. Add title and axes labels **(5mrks).**
 a.	Save the plot in a .pdf format **(1mrks).**
 b.	What can you conclude from the graph **(2mrks)?**
 
