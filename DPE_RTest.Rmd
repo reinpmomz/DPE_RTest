@@ -162,10 +162,10 @@ R_testu <- R_testu %>%
                         if_else(B17 == 3, "Neutral", 
                          if_else(B17 == 4, "Not ready", "Definitely not ready" 
                                 )))))%>%
-  mutate(C1 = if_else(B17 == 1, "I have been employed (for example in an office, restaurant,",
-              if_else(B17 == 2, "I am self-employed (for example, on my own farm or family's",
-              if_else(B17 == 3, "I have been employed as an unpaid intern", 
-              if_else(B17 == 4, "I have been engaged in household activities including agricu",
+  mutate(C1 = if_else(C1 == 1, "I have been employed",
+              if_else(C1 == 2, "I am self-employed",
+              if_else(C1 == 3, " unpaid intern", 
+              if_else(C1 == 4, "household activities",
                       "I have not been employed" 
                                 )))))
 
@@ -448,6 +448,7 @@ scale=weibull$estimate[[2]], main="Q-Q Plot ~ Weibull model")
 
 ```
 
+
 ### Multiple Regression
 
 ```{r}
@@ -455,12 +456,12 @@ scale=weibull$estimate[[2]], main="Q-Q Plot ~ Weibull model")
 
 R_testu_reg <- R_testu%>%
   mutate(S3 = if_else(S3 == 1, "None/did not complete",
-              if_else(S3 == 2, "Uganda Certificate of Education (UCE) 1-2 passes",
-              if_else(S3 == 3, "Uganda Certificate of Education (UCE) 3-5 passes",
-              if_else(S3 == 4, "Uganda Certificate of Education (UCE) 5 or more passes",        
-              if_else(S3 == 5, "Uganda Advanced Certificate of Education (UACE) – 1 principa", 
-              if_else(S3 == 6, "Uganda Advanced Certificate of Education (UACE) 2 principal", 
-                    "Uganda Advanced Certificate of Education (UACE) 3 principals")))))))%>%
+              if_else(S3 == 2, "(UCE) 1-2 passes",
+              if_else(S3 == 3, "(UCE) 3-5 passes",
+              if_else(S3 == 4, "(UCE) 5 or more passes",        
+              if_else(S3 == 5, "(UACE) – 1 principal", 
+              if_else(S3 == 6, "(UACE) 2 principal", 
+                    "(UACE) 3 principals")))))))%>%
   mutate(S4 = if_else(S4 == 1, "Yes", "No"))%>%
   mutate(S5_a = if_else(S5_a == 1, "Yes",
                         if_else(S5_a == 2, "No", "I don't know")))%>%
@@ -480,11 +481,11 @@ R_testu_reg <- R_testu%>%
               if_else(A10 == 3, "I live with 2-3 other people",
               if_else(A10 == 4, "I live with 4-6 other people",
                       "I live with 7 or more people")))))%>%
-  mutate(A12 = if_else(A12 == 1, "I am the head of the household",
-              if_else(A12 == 2, "I am the wife of the head of household",
-              if_else(A12 == 3, "I am the daughter of the head of household",
-              if_else(A12 == 4, "I am a relative of the head of household",        
-              if_else(A12 == 5, "I am a friend of the head of household", 
+  mutate(A12 = if_else(A12 == 1, "I am the head",
+              if_else(A12 == 2, "I am the wife",
+              if_else(A12 == 3, "I am the daughter",
+              if_else(A12 == 4, "I am a relative",        
+              if_else(A12 == 5, "I am a friend", 
               "Other"))))))%>%
   mutate(B8 = if_else(B8 == 1, "Diploma",
                         if_else(B8 == 2, "Technical certificate", "Bachelor's degree")))%>%
@@ -500,6 +501,7 @@ R_testu_reg <- R_testu%>%
   mutate(B4 = factor(B4))%>%
   mutate(B8 = factor(B8))%>%
   mutate(B17 = factor(B17))%>%
+  mutate(C1 = factor(C1))%>%
   dplyr:: rename(age_grouped = "S2",
                  secondary_school_certificate = "S3",
                  enrolled_tertiary_school_certificate = "S4",
@@ -512,8 +514,9 @@ R_testu_reg <- R_testu%>%
                  all_secondary_girls_school = "B4",
                  career_next_level_of_education = "B8",
                  willing_to_pay_next_level_of_education = "B16",
-                 career_ready = "B17")%>%
-dplyr:: select(7,10,13,14, 16,17, 18, 19, 22, 23, 24, 25)%>%
+                 career_ready = "B17",
+                 employed_last_12months = "C1")%>%
+dplyr:: select(7,10,13,14, 16,17, 18, 19, 22, 23, 24, 25, 26)%>%
   drop_na()
 
 select
@@ -543,7 +546,7 @@ summary(stepAIC(mlm1a))
 
 ```{r}
 
-R_testu_reg$p1 <- round(predict(mlm1a, R_testu_reg),0)
+R_testu_reg$predict_OLS <- round(predict(mlm1a, R_testu_reg),0)
 
 
 sigma(mlm1a) #Residual Standard Error (RSE)
@@ -554,18 +557,41 @@ sigma(mlm1a)/mean(R_testu_reg$willing_to_pay_next_level_of_education) #The error
 
 ```
 
+Error rate is high. (42.39%). count data is highly non-normal and is not well estimated by OLS regression.
+
+
+Poisson regression is often used for modeling count data. (a type of data in which the observations can take only the non-negative integer values {0, 1, 2, 3, ... }, and where these integers arise from counting rather than ranking.)
+
 
 ### Poisson Regression
 
 
 ```{r}
 
-mglm1a <-glm(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg,
+mglm1a <-glm(formula = willing_to_pay_next_level_of_education ~ . -predict_OLS , data = R_testu_reg,
              family = poisson)
 summary(mglm1a)
 
 
 ```
+
+As over-dispersion is present in this data set, we re-compute the Wald tests using sandwich 
+standard errors.
+
+```{R}
+
+
+library(sandwich)
+library(lmtest)
+
+coeftest(mglm1a, vcov = sandwich)
+
+#coef(mglm1a, vcov = sandwich)
+
+
+```
+
+
 
 If the Residual Deviance is greater than the degrees of freedom, then over-dispersion exists. This means that the estimates are correct, but the standard errors (standard deviation) are wrong and unaccounted for by the model.
 
@@ -580,11 +606,14 @@ The model leads to an estimated dispersion parameter  which is clearly larger th
 
 ```{r}
 
-mglm1b <-glm(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg,
+mglm1b <-glm(formula = willing_to_pay_next_level_of_education ~ . -predict_OLS , data = R_testu_reg,
              family = quasipoisson)
 summary(mglm1b)
 
 ```
+
+Since our count data is over-dispersed,( that is when the conditional variance exceeds the conditional mean), we can use negative binomial regression. It can be considered as a generalization of Poisson regression since it has the same mean structure as Poisson regression and it has an extra parameter to model the over-dispersion. If the conditional distribution of the outcome variable is over-dispersed, the confidence intervals for Negative binomial regression are likely to be narrower as compared to those from a Poisson regression.
+
 
 ### Negative binomial Model
 
@@ -595,7 +624,7 @@ for both Beta and Theta which can be computed.
 
 ```{r}
 
-mglm1c <-glm.nb(formula = willing_to_pay_next_level_of_education ~ . -p1 , data = R_testu_reg)
+mglm1c <-glm.nb(formula = willing_to_pay_next_level_of_education ~ . -predict_OLS , data = R_testu_reg)
 summary(mglm1c)
 
 ```
@@ -603,21 +632,115 @@ summary(mglm1c)
 
 ```{r}
 
-R_testu_reg$p2 <- round(predict(mglm1a, R_testu_reg, type = "response"),0)
-
-R_testu_reg$p3 <- round(predict(mglm1b, R_testu_reg, type = "response"),0)
-
-R_testu_reg$p4 <- round(predict(mglm1c, R_testu_reg, type = "response"),0)
-
+R_testu_reg$predict_NB <- round(predict(mglm1c, R_testu_reg, type = "response"),0)
 
 ```
 
 
+Our count data does not have zero i.e zero cannot occur.
+
+Ordinary Poisson regression and Ordinary Negative Binomial regression will have difficulty with zero-truncated data. It will try to predict zero counts even though there are no zero values.
+
+The zero-truncated Poisson and negative binomial is designed for data that do not include zeroes. A sensible approach is to fit a Poisson or negative binomial model that excludes zero and rescales the other probabilities to sum to one. One should be careful interpreting these models because **mean** is not the expected outcome, but the mean of an underlying distribution that includes the zeros. These models are implemented in the vglm() function in the VGAM package, using the families pospoisson and posnegbinomial.
 
 
+### Zero-truncated Poisson Model
+
+Zero-truncated Poisson Regression is useful if you have no overdispersion. Since overdispersion is present in our data, we will model using Zero-truncated Negative binomial.
 
 
+### Zero-truncated Negative binomial Model
 
+```{r}
+
+library(VGAM)
+
+mglm1d <- vglm(formula = willing_to_pay_next_level_of_education ~ . -predict_OLS -predict_NB
+               , family = posnegbinomial() ,data = R_testu_reg)
+
+summary(mglm1d)
+
+```
+
+```{r}
+
+R_testu_reg$predict_ZTNB <- round(predict(mglm1d, R_testu_reg, type = "response"),0)
+
+```
+
+
+### Comparison of the Count Models
+
+
+Having fitted several count data regression models it is of interest to understand what these models have in common and what their differences are.
+
+
+#### Estimates/Regression coefficients
+
+1st comparison, we inspect the estimated regression coefficients in the count data models
+
+```{R}
+
+mglm1a_a <- coeftest(mglm1a, vcov = sandwich)
+
+fm <- list( "Mult-OLS" = mlm1a , "Pois" = mglm1a, "Adj-Pois" = mglm1a_a,
+            "Quasi-Pois" = mglm1b, "NegBin" = mglm1c, "ZT-NegBin" = mglm1d)
+
+round(sapply(fm, function(x) coef(x)[1:36]), 4)
+
+
+```
+
+#### Standard Errors
+
+2nd comparison the associated estimated standard errors
+
+```{R}
+
+
+round(cbind( "Mult-OLS" = sqrt(diag(vcov(mlm1a))), 
+             "Pois" = sqrt(diag(vcov(mglm1a))), "Adj-Pois" = sqrt(diag(sandwich(mglm1a))),
+      sapply(fm[-(1:3)], function(x) sqrt(diag(vcov(x)))[1:36])),4)
+
+```
+
+#### Log-Likelihood & AIC
+
+3rd Comparison The differences of the models become obvious if not only the mean but the full likelihood is considered.
+
+```{R}
+
+rbind(logLik = sapply(fm, function(x) round(logLik(x), digits = 0)),
+      Df = sapply(fm, function(x) attr(logLik(x), "df")),
+      aic = sapply(fm, function(x) round(AIC(x), digits = 0)))
+
+```
+
+The Poisson model is clearly inferior to all other fits. The quasi-Poisson model is not associated with a fitted likelihood and Akaike's Information Criterion (AIC). 
+
+The negative binomial already improves the fit dramatically but can in turn be improved by 
+the zero inflated and hurdle model. 
+
+The over-dispersion in the data is captured better by the negative-binomial-based models than 
+the Poisson models.
+
+
+#### df.residual, five-percent critical value of df.residual, deviance & Residuals Pearson's chi-squared
+
+4th comparison
+
+```{r}
+
+rbind(df_residual = sapply(fm[-3], function(x) round(df.residual(x), digits = 0)),
+      criticalvalue = sapply(fm[-3], function(x) round(qchisq(0.95, df.residual(x)), digits = 0)),
+      dev = sapply(fm[-3], function(x) deviance(x)),
+      resid.Pearson = sapply(fm[-3], function(x) round(sum((residuals(x,"pearson"))^2), 0))
+      )
+
+```
+
+
+From the above comparisons, the negative binomial model is the best model to fit the data.
 
 
 
